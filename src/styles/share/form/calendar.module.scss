@@ -1,0 +1,26 @@
+.calendar {
+    label {
+        display: block;
+        padding: $basicGap / 2 0;
+    }
+    .pricker {
+        position: relative;
+        &[data-error='true'] {
+            &::before {
+                content: '';
+                position: absolute;
+                top: 0;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                border: 2px solid $color-error;
+                border-left-width: 6px;
+            }
+            &:hover {
+                &::before {
+                    border-width: 3px;
+                }
+            }
+        }
+    }
+}

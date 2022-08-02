@@ -1,0 +1,16 @@
+:export {
+    font: {
+        family: $font-family;
+    }
+    color: {
+        primary: $color-primary;
+        secondary: $color-secondary;
+        while: $color-white;
+        gray: $color-lightgray;
+    }
+    breakpoint: {
+        desktop: map.get($breakpoint, 'desktop');
+        tablet: map.get($breakpoint, 'tablet');
+        mobile: map.get($breakpoint, 'mobile');
+    };
+}

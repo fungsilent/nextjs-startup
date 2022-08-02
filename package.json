@@ -1,0 +1,36 @@
+{
+  "name": "power-moto",
+  "version": "1.0.0",
+  "description": "Power Moto website frontend using Next.js",
+  "private": true,
+  "scripts": {
+    "dev": "nodemon -w server/server.js server/server.js",
+    "build": "next build && next export",
+    "start": "next start",
+    "pm2-dev": "pm2 start npm --name 'power-moto-dev' -- run dev",
+    "pm2-start": "next build && pm2 start npm --name 'power-moto' -- run start"
+  },
+  "dependencies": {
+    "@emotion/react": "^11.9.3",
+    "@emotion/styled": "^11.9.3",
+    "@mui/material": "^5.9.1",
+    "@mui/x-date-pickers": "^5.0.0-beta.2",
+    "date-fns": "^2.29.1",
+    "lodash": "^4.17.21",
+    "moment": "^2.29.4",
+    "next": "latest",
+    "next-seo": "^5.5.0",
+    "react": "17.0.2",
+    "react-dom": "17.0.2",
+    "react-hook-form": "^7.33.1",
+    "react-use": "^17.4.0"
+  },
+  "devDependencies": {
+    "@types/node": "^18.0.6",
+    "@types/react": "^18.0.15",
+    "express": "^4.18.1",
+    "nodemon": "^2.0.19",
+    "sass": "^1.53.0",
+    "typescript": "^4.7.4"
+  }
+}

@@ -1,0 +1,24 @@
+// font
+$font-family: 'Noto Sans TC', sans-serif;
+
+// color
+$color-primary: #0F396B;
+$color-secondary: #FFDB27;
+$color-white: #FFFFFF;
+$color-lightgray: #F4F4F4;
+$color-gray: #DDDDDD;
+$color-error: #D32F2F;
+
+// spacing
+$basicGap: 20px;
+$sectionGap: $basicGap * 3;
+$lineHeight: 1.4;
+
+// size
+$containerWidth: 1400px;
+$breakpoint: (
+    'desktop': 1001px,
+    'tablet': 1000px,
+    'mobile': 600px,
+);
+$textboxOverBorder: 200px;

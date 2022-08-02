@@ -1,0 +1,169 @@
+kind: pipeline
+type: docker
+name: App Test
+
+steps:
+- name: Restore Cache
+  image: drillster/drone-volume-cache
+  volumes:
+    - name: cache
+      path: /cache
+  settings:
+    restore: true
+    mount:
+      - ./node_modules
+
+
+- name: E2E Test
+  image: cypress/included:10.3.0
+  environment:
+    PROJECT_ENV:
+      from_secret: PROJECT_ENV
+    CYPRESS_ENV_JSON:
+      from_secret: CYPRESS_ENV_JSON
+  commands:
+  - echo $${PROJECT_ENV} | tee .env
+  - echo $${CYPRESS_ENV_JSON} | tee cypress.env.json
+  - ls -la
+  - npm install
+  # - npm run test:e2e
+
+- name: Rebuild Cache
+  image: drillster/drone-volume-cache
+  volumes:
+    - name: cache
+      path: /cache
+  settings:
+    rebuild: true
+    mount:
+      - ./node_modules
+
+trigger:
+  event:
+  - push
+  - pull_request
+
+volumes:
+  - name: cache
+    host:
+      path: /tmp/cache
+
+---
+kind: pipeline
+type: docker
+name: Test Result
+
+steps:
+- name: notify
+  image: plugins/slack
+  settings:
+    webhook:
+      from_secret: SLACK_WEBHOOK
+    template: "*{{#success build.status}}:white_check_mark:{{ else }}:x:{{/success}} {{ uppercasefirst build.event }} {{ uppercase build.status }}* \nProject: `{{ repo.owner }}/{{ repo.name }}` ({{ build.branch }})\nBuild #{{ build.number }} ({{ truncate build.commit 8 }}) by {{ build.author }} \n<{{ build.link }}|Innpression Drone CI>"
+  when:
+    status:
+    - success
+    - failure
+
+depends_on:
+- App Test
+
+trigger:
+  event:
+  - push
+  - pull_request
+  status:  # always run
+  - success
+  - failure
+
+---
+kind: pipeline
+type: docker
+name: UAT Deployment
+
+steps:
+- name: Restore Cache
+  image: drillster/drone-volume-cache
+  volumes:
+    - name: cache
+      path: /cache
+  settings:
+    restore: true
+    mount:
+      - ./node_modules
+
+- name: Build App
+  image: cypress/included:10.3.0
+  commands:
+  - npm install
+  - npm run build
+
+- name: Rebuild Cache
+  image: drillster/drone-volume-cache
+  volumes:
+    - name: cache
+      path: /cache
+  settings:
+    rebuild: true
+    mount:
+      - ./node_modules
+
+- name: Deploy to UAT server
+  image: drillster/drone-rsync
+  settings:
+    hosts:
+      from_secret: UAT_HOST
+    user:
+      from_secret: UAT_SSH_USER
+    key:
+      from_secret: UAT_SSH_KEY
+    source: out/
+    target:
+      from_secret: UAT_DEPLOY_PATH
+    recursive: true
+    args: "--delete -vh"
+    script:
+      # - ls -la
+  when:
+    branch:
+      - master
+
+trigger:
+  event:
+  - promote
+  target:
+  - uat
+
+volumes:
+  - name: cache
+    host:
+      path: /tmp/cache
+
+---
+kind: pipeline
+type: docker
+name: UAT Deploy Result
+
+steps:
+- name: notify
+  image: plugins/slack
+  settings:
+    webhook:
+      from_secret: SLACK_WEBHOOK
+    template: "*{{#success build.status}}:white_check_mark:{{ else }}:x:{{/success}} UAT Deployment {{ uppercase build.status }}* \nProject: `{{ repo.owner }}/{{ repo.name }}` ({{ build.branch }})\nBuild #{{ build.number }} ({{ truncate build.commit 8 }}) by {{ build.author }} \n<{{ build.link }}|Innpression Drone CI>"
+  when:
+    status:
+    - success
+    - failure
+
+depends_on:
+- UAT Deployment
+
+trigger:
+  event:
+  - promote
+  target:
+  - uat
+  status:  # always run
+  - success
+  - failure

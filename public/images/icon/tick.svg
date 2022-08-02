@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="29" height="29" viewBox="0 0 29 29">
+  <g id="checked_1_" data-name="checked (1)" transform="translate(-0.188 -0.188)">
+    <g id="Group_8" data-name="Group 8">
+      <g id="Group_7" data-name="Group 7">
+        <g id="Group_6" data-name="Group 6">
+          <circle id="Ellipse_1" data-name="Ellipse 1" cx="14.5" cy="14.5" r="14.5" transform="translate(0.188 0.188)" fill="#ffdb27"/>
+        </g>
+      </g>
+    </g>
+    <path id="Path_4" data-name="Path 4" d="M120.7,106.7l-11.415,10.711,7.628,7.628a14.707,14.707,0,0,0,10.679-11.447Z" transform="translate(-98.478 -96.143)" fill="#ddb800"/>
+    <g id="Group_9" data-name="Group 9" transform="translate(6.345 8.422)">
+      <path id="Path_5" data-name="Path 5" d="M69.773,99.15,64.15,93.527l2.938-2.938,2.685,2.686L77.9,85.15l2.938,2.938Z" transform="translate(-64.15 -85.15)" fill="#ecf0f1"/>
+    </g>
+  </g>
+</svg>

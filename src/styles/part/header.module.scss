@@ -1,0 +1,84 @@
+.header {
+    position: relative;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    gap: $basicGap;
+    .desktopContainer {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background-color: $color-white;
+        border-radius: 30px;
+        margin: $basicGap * 2 $basicGap;
+        overflow: hidden;
+        @include media('tablet') {
+            display: none;
+        }
+        .logo {
+            flex: 0 0 54px;
+            position: relative;
+            width: 54px;
+            height: 54px;
+            margin-left: 2%;
+        }
+        .menu {
+            flex: 1;
+            display: flex;
+            justify-content: space-around;
+            gap: $basicGap / 2;
+            max-width: 1000px;
+            color: $color-primary;
+            .menuItem {
+                padding: $basicGap 0;
+                &:hover {
+                    color: $color-secondary;
+                }
+            }
+        }
+    }
+    .mobileContainer {
+        position: fixed;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        align-items: center;
+        background-color: $color-white;
+        box-shadow: 0px 0px 5px $color-gray;
+        z-index: 100;
+        @include media('desktop') {
+            display: none;
+        }
+        .logo {
+            flex: 0 0 54px;
+            position: relative;
+            width: 54px;
+            height: 54px;
+            margin: 16px 20px;
+        }
+        .menuButton {
+            position: relative;
+            width: 30px;
+            height: 30px;
+            margin: 16px 20px;
+        }
+    }
+}
+$cornerSize: 14px;
+.sideMenu {
+    width: 75vw;
+    height: 100vh;
+    color: $color-white;
+    background-color: $color-primary;
+    padding: $basicGap 0;
+    overflow-y: auto;
+    .menuItem {
+        padding: $basicGap;
+        transition: all .25s ease-in;
+        &:hover {
+            color: $color-primary;
+            background-color: $color-secondary;
+            clip-path: polygon(0 0, calc(100% - $cornerSize) 0, 100% $cornerSize, 100% 100%, $cornerSize 100%, 0 calc(100% - $cornerSize))
+        }
+    }
+}

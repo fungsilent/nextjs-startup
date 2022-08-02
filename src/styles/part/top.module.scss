@@ -1,0 +1,13 @@
+.goTop {
+    position: fixed;
+    left: $basicGap;
+    bottom: 5%;
+    cursor: pointer;
+    @include media('tablet') {
+        left: $basicGap / 2;
+    }
+    i {
+        width: 22px;
+        height: 30px;
+    }
+}

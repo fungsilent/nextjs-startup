@@ -1,0 +1,29 @@
+$cornerSize: 14px;
+
+.button {
+    position: relative;
+    display: flex;
+    font-weight: bold;
+    color: $color-primary;
+    background: unset;
+    border: unset;
+    border-bottom: 1px solid #DDDDDD;
+    padding: 5px $basicGap * 2;
+    transition: color .25s ease-in-out, background-color .25s ease-in-out;
+    cursor: pointer;
+    clip-path: polygon(0 0, calc(100% - $cornerSize) 0, 100% $cornerSize, 100% 100%, 0 100%);
+    &:hover {
+        color: $color-secondary;
+        background-color: $color-primary;
+    }
+    &::before {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: $cornerSize;
+        height: $cornerSize;
+        background-color: $color-secondary;
+        clip-path: polygon(0 0, 0% 100%, 100% 100%);
+    }
+}
