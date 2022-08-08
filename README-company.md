@@ -35,6 +35,8 @@ npm run build
 This project is SSG website without Node.js server via `next export` [see more](https://nextjs.org/docs/advanced-features/static-html-export)
 , make sure all page is SSG not SSR, you can check it via build reuslt
 
+If you need test the build, you must run `start` instead of `dev`
+
 ## CI & deployment
 
 This project uses [Innperssion internal Drone CI](https://drone.innpression.com/) for CI/CD and deployment with `.drone.yml`. Make sure you have created **secrets** in Drone CI before pushing or deploying:
