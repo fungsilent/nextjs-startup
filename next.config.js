@@ -2,7 +2,7 @@ const nextConfig = {
     images: {
         unoptimized: true,
         loader: 'akamai',
-        path: '',
+        path: '/',
     },
     sassOptions: {
         // includePaths: [path.join(__dirname, 'src/styles')],

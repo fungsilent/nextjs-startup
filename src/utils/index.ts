@@ -1,10 +1,10 @@
-import findOptionLabel from './findOptionLabel'
+import findData from './findData'
 import formatPrice from './formatPrice'
 import setClassName from './setClassName'
 import toQueryString from './toQueryString'
 
 export {
-    findOptionLabel,
+    findData,
     formatPrice,
     setClassName,
     toQueryString,
