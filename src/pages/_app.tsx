@@ -4,22 +4,23 @@ import { DefaultSeo } from 'next-seo'
 import Header from '@/components/part/header'
 import Footer from '@/components/part/footer'
 import GoTop from '@/components/part/goTop'
+import useConfig from '@/hooks/useConfig'
 import '@/styles/globals.scss'
 
 const App = ({ Component, pageProps }: AppProps) => {
     const { headerClassName, ...restProps } = pageProps
+    const config = useConfig()
     return (
         <div className='app'>
             <DefaultSeo
                 title=''
-                titleTemplate = '%s | SiteName'
-                defaultTitle = 'Ankor Motor'
-                description='description'
+                titleTemplate={`%s | ${config.seo.siteName}`}
+                defaultTitle={config.seo.siteName}
+                description={config.seo.description}
                 openGraph={{
-                    url: 'http://www.domain.com',
-                    title: 'Title',
-                    description: 'description',
-                    site_name: 'SiteName',
+                    title: config.seo.siteName,
+                    description: config.seo.description,
+                    site_name: config.seo.siteName,
                 }}
                 additionalLinkTags={[
                     {

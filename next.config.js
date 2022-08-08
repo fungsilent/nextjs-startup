@@ -21,6 +21,10 @@ const nextConfig = {
         '/': { page: '/' },
     }),
     publicRuntimeConfig: {
+        seo: {
+            siteName: 'SiteName',
+            description: 'SEO description',
+        }
     }
 }
   
