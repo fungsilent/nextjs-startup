@@ -1,4 +1,4 @@
-import Image from 'next/image'
+import Image from '@/components/share/image'
 import { setClassName } from '@/utils'
 import styles from '@/styles/share/icon.module.scss'
 
