@@ -12,6 +12,9 @@ const Demo = () => {
             <Link href='/example/seo'>
                 SEO
             </Link>
+            <Link href='/example/dynamic-route-export/param-1'>
+                Dynamic Route Export
+            </Link>
         </div>
     )
 }
