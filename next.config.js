@@ -20,6 +20,13 @@ const nextConfig = {
     exportPathMap: async () => ({
         '/': { page: '/' },
     }),
+    redirects: async () => ([
+        {
+            source: '/',
+            destination: '/example',
+            permanent: true,
+        },
+    ]),
     publicRuntimeConfig: {
         seo: {
             siteName: 'SiteName',
