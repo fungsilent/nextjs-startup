@@ -11,8 +11,12 @@ export type ApiReuslt<Data> = Api<Data> & {
     isFailed: boolean
 }
 
-const useSelector = useReduxSelector
-const useDispatch = () => useReduxDispatch<AppDispatch>()
+const useDispatch = useReduxDispatch<AppDispatch>
+
+/* TODO: handle equalityFn type */
+const useSelector = <State = AppState, Selected = unknown>(selector: (state: State) => Selected, equalityFn?) => {
+    return useReduxSelector<State, Selected>(selector, equalityFn)
+}
 
 const useStore = (selector: (state: AppState) => Api) => {
     const state = useSelector(selector)
@@ -38,7 +42,7 @@ const useApi = <Data>(
     const [, toogleReRender] = useToggle(false)
 
     // Store
-    const apiState = useSelector((state: AppState) => state.api[apiKey])
+    const apiState = useSelector((state) => state.api[apiKey])
     const state = useRef<ApiReuslt<Data>>({
         ...apiState,
         data: handleData(apiState.data),

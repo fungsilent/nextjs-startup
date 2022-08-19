@@ -1,6 +1,7 @@
 // import NextApp from 'next/app'
 import { AppProps } from 'next/app'
 import { DefaultSeo } from 'next-seo'
+import { appStore, Provider } from '@/store'
 import Header from '@/components/part/header'
 import Footer from '@/components/part/footer'
 import GoTop from '@/components/part/goTop'
@@ -11,7 +12,7 @@ const App = ({ Component, pageProps }: AppProps) => {
     const { headerClassName, ...restProps } = pageProps
     const config = useConfig()
     return (
-        <div className='app'>
+        <Provider store={appStore}>
             <DefaultSeo
                 title=''
                 titleTemplate={`%s | ${config.seo.siteName}`}
@@ -29,11 +30,14 @@ const App = ({ Component, pageProps }: AppProps) => {
                     },
                 ]}
             />
-            <Header className={headerClassName}/>
-            <Component {...restProps}/>
-            <GoTop/>
-            <Footer/>
-        </div>
+            <div className='app'>
+                <Header className={headerClassName}/>
+                <Component {...restProps}/>
+                <GoTop/>
+                <Footer/>
+            </div>
+        </Provider>
+        
     )
 }
 

@@ -1,22 +1,22 @@
 import { createSlice } from '@reduxjs/toolkit'
 
 type NormalStoreType = {
-    text: string 
+    counter: number 
 }
 
 const initialState: NormalStoreType = {
-    text: 'init',
+    counter: 0,
 }
 
 const normalSlice = createSlice({
     name: 'normal',
     initialState,
     reducers: {
-        changeText(state) {
-            state.text = 'A'
+        addCounter(state) {
+            state.counter += 1
         },
     }
 })
 
-export const normalActions = normalSlice.actions
+export const { addCounter } = normalSlice.actions
 export default normalSlice.reducer
