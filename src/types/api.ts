@@ -19,3 +19,8 @@ export type Api<Data = unknown> = {
 export type ApiState = {
     [apiKey: string]: Api
 }
+
+export type ResponseData<Data = unknown> = {
+    result: keyof ApiResponseStatus
+    data: Data
+}

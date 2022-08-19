@@ -1,7 +1,4 @@
-import _ from 'lodash'
-import { createAsyncThunk } from '@reduxjs/toolkit'
-import { applyApi, setApiData } from '@/store/utils/api'
-import { ApiResponseStatus } from '@/types/api'
+import { createApiThunk, applyApi, setApiData, handleResponse } from '@/store/utils/api'
 
 export type AddContactData = {
     name: string
@@ -11,19 +8,22 @@ export type AddContactData = {
 }
 
 // Actions
-/* TODO: handle return data type */
-export const addContact = createAsyncThunk(
+export const addContact = createApiThunk<AddContactData>(
     'addContact',
-    async (arg: AddContactData, { rejectWithValue }) => {
-        try {
-            const data = setApiData(arg, 'contact_us_data')
-            const response = await applyApi.post('add_contact_us', data)
-            if (response.data.result === ApiResponseStatus[ApiResponseStatus.fail]) {
-                throw new Error('Request Failed')
-            }
-            return response.data.data as AddContactData
-        } catch (error) {
-            return rejectWithValue(error.message)
-        }
-    }
+    async (arg) => {
+        const data = setApiData(arg, 'contact_us_data')
+        const response = await applyApi.post<AddContactData>('add_contact_us', data)
+        return handleResponse(response)
+    },
+    // async (arg: AddContactData, { rejectWithValue }) => {
+    //     createAsyncFlow<AddContactData>(
+    //         async () => {
+    //             const data = setApiData(arg, 'contact_us_data')
+    //             return applyApi.post<AddContactData>('add_contact_us', data)
+    //         },
+    //         error => {
+    //             return rejectWithValue(error.message)
+    //         }
+    //     )
+    // }
 )

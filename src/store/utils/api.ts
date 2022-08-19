@@ -1,13 +1,15 @@
-import axios from 'axios'
-import { serialize } from 'object-to-formdata'
 import getConfig from 'next/config'
-import { ActionReducerMapBuilder, AsyncThunk } from '@reduxjs/toolkit'
-import { ApiStatus } from '@/types/api'
-import _ from 'lodash'
+import axios, { AxiosResponse } from 'axios'
+import { serialize } from 'object-to-formdata'
+import { createAsyncThunk, ActionReducerMapBuilder, AsyncThunk, AsyncThunkPayloadCreator } from '@reduxjs/toolkit'
+import { ApiStatus, ApiResponseStatus, ResponseData } from '@/types/api'
 
 const { apiBaseUrl } = getConfig().publicRuntimeConfig
 
-/* TODO: clarify type */
+/*
+** mapApiReducers: a helper to map the api status reducers
+*/
+/* TODO: clarify type (Returned, ThunkArg) */
 export const mapApiReducers = <ApiState, Returned, ThunkArg>(
     builder: ActionReducerMapBuilder<ApiState>,
     apiAction: AsyncThunk<Returned, ThunkArg, {}>,
@@ -26,7 +28,26 @@ export const mapApiReducers = <ApiState, Returned, ThunkArg>(
     })
 }
 
-export const applyApi = {
+/*
+** setApiData: a helper to set common api data
+*/
+export const setApiData = <Data = object>(data: Data, type: string): Data => {
+    return {
+        ...data,
+        data_type: type,
+        status: 'active',
+        data_status: 'active',
+    }
+}
+
+/*
+** ApplyApi: an axios helper to set data and apply
+*/
+type ApplyApi = {
+    serialize: (endpoint: string, data: {}) => FormData
+    post: <ApiData>(endpoint: string, data: {}, config?: {}) => Promise<AxiosResponse<ResponseData<ApiData>>>
+}
+export const applyApi: ApplyApi = {
     serialize: (endpoint: string, data = {}): FormData => (serialize({
         [endpoint]: JSON.stringify(data)
     })),
@@ -34,14 +55,34 @@ export const applyApi = {
         return await axios.post(apiBaseUrl, applyApi.serialize(endpoint, data), {
             ...config,
         })
-    }
+    },
 }
 
-export const setApiData = <TData = object>(data: TData, type: string): TData => {
-    return {
-        ...data,
-        data_type: type,
-        status: 'active',
-        data_status: 'active',
+/*
+** createApiThunk: a helper to simplify api thunk creation
+*/
+export const createApiThunk = <ApiData>(
+    type: string,
+    thunk: AsyncThunkPayloadCreator<ApiData, ApiData>,
+): AsyncThunk<ApiData, ApiData, {}> => {
+    return createAsyncThunk<ApiData, ApiData, {}>(
+        type,
+        async (arg, thunkApi) => {
+            try {
+                return await thunk(arg, thunkApi)
+            } catch (err) {
+                return thunkApi.rejectWithValue(err.message)
+            }
+        },
+    )
+}
+
+/*
+** handleResponse: a helper to simplify response handling
+*/
+export const handleResponse = <ApiData>(response: AxiosResponse<ResponseData<ApiData>>) => {
+    if (response.data.result !== ApiResponseStatus[ApiResponseStatus.success]) {
+        throw new Error('Request Failed')
     }
+    return response.data.data
 }

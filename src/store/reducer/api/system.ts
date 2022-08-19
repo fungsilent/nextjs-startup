@@ -1,21 +1,15 @@
-import { createAsyncThunk } from '@reduxjs/toolkit'
-import { applyApi } from '@/store/utils/api'
-import { ApiResponseStatus } from '@/types/api'
+import { createApiThunk, applyApi, handleResponse } from '@/store/utils/api'
+
+export type FetchSystemData = {
+    itemA: []
+    itemB: number
+}
 
 // Actions
-/* TODO: handle return data type */
-export const fetchSystem = createAsyncThunk(
+export const fetchSystem = createApiThunk<void>(
     'fetchSystem',
-    async (arg, { rejectWithValue }) => {
-        try {
-            const response = await applyApi.post('get_system', {})
-            // throw new Error('Request Failed')
-            if (response.data.result === ApiResponseStatus[ApiResponseStatus.fail]) {
-                throw new Error('Request Failed')
-            }
-            return response.data.data
-        } catch (error) {
-            return rejectWithValue(error.message)
-        }
-    }
+    async () => {
+        const response = await applyApi.post<void>('get_system', {})
+        return handleResponse(response)
+    },
 )
