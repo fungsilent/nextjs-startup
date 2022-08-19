@@ -6,7 +6,10 @@
         primary: $color-primary;
         secondary: $color-secondary;
         while: $color-white;
-        gray: $color-lightgray;
+        lightgray: $color-lightgray;
+        gray: $color-gray;
+        success: $color-success;
+        error: $color-error;
     }
     breakpoint: {
         desktop: map.get($breakpoint, 'desktop');
