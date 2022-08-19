@@ -1,47 +1,32 @@
-import { styled } from '@mui/material/styles'
-import OutlinedInput, { outlinedInputClasses } from '@mui/material/OutlinedInput'
-import { Controller, Control } from 'react-hook-form'
+import MuiOutlinedInput, { OutlinedInputProps } from '@mui/material/OutlinedInput'
+import { Controller, FieldPath, FieldValues, UseControllerProps } from 'react-hook-form'
+import { setClassName } from '@/utils'
 import styles from '@/styles/share/form/text.module.scss'
-import theme from '@/styles/export.module.scss'
 
-const CustOutlinedInput = styled(OutlinedInput)(() => ({
-    fontFamily: theme['font-family'],
-    color: theme['color-primary'],
-    backgroundColor: theme['color-while'],
-    border: `1px solid ${theme['color-primary']}`,
-    borderRadius: 0,
-    padding: 0,
-    [`& .${outlinedInputClasses.notchedOutline}`]: {
-        borderColor: 'unset',
-        transition: 'border .1s ease-in',
-    },
-    [`&.${outlinedInputClasses.error} .${outlinedInputClasses.notchedOutline}`]: {
-        borderColor: theme['color-error'],
-        borderLeftWidth: 6,
-    },
-    [`&.${outlinedInputClasses.focused}:not(.${outlinedInputClasses.error}) .${outlinedInputClasses.notchedOutline}`]: {
-        borderColor: theme['color-secondary'],
-    },
-}))
+export type TextFieldProps<
+    TFieldValues extends FieldValues = FieldValues,
+    TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>
+> = UseControllerProps<TFieldValues, TName> & OutlinedInputProps & {
+    label?: string
+    placeholder?: string
+    required?: boolean
+    pattern?: RegExp
+    layout?: 'default'
+}
 
-const TextField = (props: {
-    name: string,
-    control: Control,
-    label?: string,
-    placeholder?: string,
-    required?: boolean,
-    pattern?: RegExp,
-    [restProps: string]: any
-}) => {
-    const {
-        name,
-        control,
-        label = '',
-        placeholder = '',
-        required = false,
-        pattern = null,
-        ...rest
-    } = props
+const TextField = <
+    TFieldValues extends FieldValues = FieldValues,
+    TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>
+>({
+    name,
+    control,
+    label = '',
+    placeholder = '',
+    required = false,
+    pattern = null,
+    layout = 'default',
+    ...rest
+}: TextFieldProps<TFieldValues, TName>) => {
     return (
         <Controller
             name={name}
@@ -55,11 +40,11 @@ const TextField = (props: {
                 fieldState: { error },
             }) => {
                 return (
-                    <div className={styles.text} data-field={name}>
+                    <div className={setClassName([styles.text, styles[`layout-${layout}`]])} data-field={name}>
                         {label ? (
                             <label>{label}</label>
                         ) : null}
-                        <CustOutlinedInput
+                        <MuiOutlinedInput
                             {...rest}
                             name={name}
                             value={value ?? ''}
@@ -69,6 +54,12 @@ const TextField = (props: {
                             required={required}
                             error={!!error}
                             fullWidth={true}
+                            classes={{
+                                root: styles.root,
+                                notchedOutline: styles.outline,
+                                focused: styles.focused,
+                                error: styles.error,
+                            }}
                             inputProps={{
                                 sx: {
                                     padding: '12px 22px'
