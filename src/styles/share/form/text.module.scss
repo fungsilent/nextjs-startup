@@ -3,4 +3,28 @@
         display: block;
         padding: $basicGap / 2 0;
     }
+    &.layout-default {
+        .root {
+            color: $color-primary;
+            background-color: $color-white;
+            border: 1px solid $color-primary;
+            border-radius: 0;
+            padding: 0;
+            &.error {
+                .outline {
+                    border-color: $color-error;
+                    border-left-width: 6px;
+                }
+            }
+            &.focused:not(.error) {
+                .outline {
+                    border-color: $color-secondary;
+                }
+            }
+            .outline {
+                border-color: unset;
+                transition: border .1s ease-in;
+            }
+        }
+    }
 }
