@@ -19,6 +19,9 @@
     "jsx": "preserve",
     "baseUrl": ".",
     "paths": {
+      "@/*": [
+        "./src/*/index"
+      ],
       "@/components/*": [
         "./src/components/*"
       ],
@@ -28,14 +31,14 @@
       "@/pages/*": [
         "./src/pages/*"
       ],
+      "@/store/*": [
+        "./src/store/*"
+      ],
       "@/styles/*": [
         "./src/styles/*"
       ],
       "@/types/*": [
         "./src/types/*"
-      ],
-      "@/utils": [
-        "./src/utils/index"
       ],
       "@/utils/*": [
         "./src/utils/*"
