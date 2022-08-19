@@ -7,6 +7,8 @@ const routes = [
     { name: 'SEO', link: '/example/seo' },
     { name: 'Dynamic Route Export', link: '/example/dynamic-route-export/param-1' },
     { name: 'Form', link: '/example/form' },
+    { name: 'Store', link: '/example/store' },
+    { name: 'Api', link: '/example/api' },
 ]
 
 const Demo = () => {

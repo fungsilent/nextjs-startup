@@ -31,7 +31,8 @@ const nextConfig = {
         seo: {
             siteName: 'SiteName',
             description: 'SEO description',
-        }
+        },
+        apiBaseUrl: 'https://powermoto.innpressionhost.com/api/develop/request.php',
     }
 }
   
