@@ -1,6 +1,8 @@
-import { toNumber } from 'lodash'
+import { toNumber, isNaN } from 'lodash'
 
-const formatPrice = (price: string | number) => {
-    return toNumber(price).toLocaleString('en-US')
+const formatPrice = (price: string | number): string => {
+    const num = toNumber(price)
+    if (isNaN(num)) return ''
+    return num.toLocaleString('en-US')
 }
 export default formatPrice
