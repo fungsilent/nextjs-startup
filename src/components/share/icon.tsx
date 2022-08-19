@@ -1,15 +1,20 @@
-import Image from '@/components/share/image'
+import Image from 'next/image'
 import { setClassName } from '@/utils'
 import styles from '@/styles/share/icon.module.scss'
 
-interface Props {
+type Props = {
     src: string
     alt?: string
     className?: string
     [restProps: string]: any
 }
 
-const Icon = ({ src, alt = '', className = '', ...rest }: Props) => {
+const Icon = ({
+    src,
+    alt = '',
+    className = '',
+    ...rest
+}: Props) => {
     return (
         <div className={setClassName([styles.icon, className])} {...rest}>
             <i>
@@ -18,6 +23,7 @@ const Icon = ({ src, alt = '', className = '', ...rest }: Props) => {
                     alt={alt}
                     layout='fill'
                     priority={true}
+                    objectFit='contain'
                 />
             </i>
         </div>
