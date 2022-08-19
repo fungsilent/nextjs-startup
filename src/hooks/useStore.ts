@@ -11,16 +11,11 @@ export type ApiReuslt<Data> = Api<Data> & {
     isFailed: boolean
 }
 
-const useDispatch = useReduxDispatch<AppDispatch>
-const useSelector: TypedUseSelectorHook<AppState> = useReduxSelector
-
-const useStore = (selector: (state: AppState) => Api) => {
-    const state = useSelector(selector)
-    return state
-}
+export const useDispatch = useReduxDispatch<AppDispatch>
+export const useSelector: TypedUseSelectorHook<AppState> = useReduxSelector
 
 /* TODO: preventing unnecessary re-renders. think? when? needed? */
-const useApi = <Data>(
+export const useApi = <Data>(
     apiKey: keyof ApiState,
     options: {
         initReset?: boolean
@@ -84,10 +79,6 @@ const useApi = <Data>(
     }
 }
 
-export default useStore
 export {
-    useDispatch,
-    useSelector,
-    useApi,
     ApiStatus,
 }

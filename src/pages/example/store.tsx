@@ -4,15 +4,18 @@ import Button from '@/components/share/button'
 
 const Store = () => {
     const dispatch = useDispatch()
-    const counter = useSelector(state => state.normal.counter)
+    const counterA = useSelector(state => state.normal.counter)
     const add = () => dispatch(addCounter())
+
+    console.log('> counterA', counterA)
 
     return (
         <div>
-            Store
-            <div>
-            counter = [{counter}]
-            </div>
+            <h2>Store</h2>
+
+            <br/>
+            <div>counterA = [{counterA}]</div>
+            <br/>
             <Button onClick={add}>Add Counter</Button>
         </div>
     )
