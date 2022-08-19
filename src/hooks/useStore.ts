@@ -1,6 +1,6 @@
 import { useRef, useMemo, useCallback } from 'react'
 import { useFirstMountState, useToggle } from 'react-use'
-import { useSelector as useReduxSelector, useDispatch as useReduxDispatch } from 'react-redux'
+import {useSelector as useReduxSelector, useDispatch as useReduxDispatch, TypedUseSelectorHook } from 'react-redux'
 import { AppState, AppDispatch } from '@/store'
 import { ApiState, Api, ApiStatus } from '@/types/api'
 
@@ -12,11 +12,7 @@ export type ApiReuslt<Data> = Api<Data> & {
 }
 
 const useDispatch = useReduxDispatch<AppDispatch>
-
-/* TODO: handle equalityFn type */
-const useSelector = <State = AppState, Selected = unknown>(selector: (state: State) => Selected, equalityFn?) => {
-    return useReduxSelector<State, Selected>(selector, equalityFn)
-}
+const useSelector: TypedUseSelectorHook<AppState> = useReduxSelector
 
 const useStore = (selector: (state: AppState) => Api) => {
     const state = useSelector(selector)
