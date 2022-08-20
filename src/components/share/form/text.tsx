@@ -32,8 +32,8 @@ const TextField = <
             name={name}
             control={control}
             rules={{
-                required: required,
-                pattern: pattern,
+                required,
+                pattern,
             }}
             render={({
                 field: { onChange, onBlur, value, name },
@@ -59,11 +59,7 @@ const TextField = <
                                 notchedOutline: styles.outline,
                                 focused: styles.focused,
                                 error: styles.error,
-                            }}
-                            inputProps={{
-                                sx: {
-                                    padding: '12px 22px'
-                                }
+                                input: styles.input,
                             }}
                         />
                     </div>
