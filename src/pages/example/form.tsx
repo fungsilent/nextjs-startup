@@ -44,16 +44,16 @@ const Form = () => {
                     name='select'
                     label='select'
                     control={control}
-                    required={true}
                 >
                     <MenuItem value=''>-</MenuItem>
                     <MenuItem value='1'>Option 1</MenuItem>
                     <MenuItem value='2'>Option 2</MenuItem>
                 </SelectField>
-                {/* <CalendarField
+                <CalendarField
                     name='calendar'
                     control={control}
-                /> */}
+                    required={true}
+                />
                 <Button onClick={logFormData}>FormData</Button>
                 <Button onClick={handleSubmit(onSubmit)}>Submit</Button>
             </form>

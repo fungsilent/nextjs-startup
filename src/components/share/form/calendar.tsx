@@ -1,54 +1,40 @@
-import { styled } from '@mui/material/styles'
-import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns'
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider'
-import { CalendarPicker, calendarPickerClasses } from '@mui/x-date-pickers/CalendarPicker'
-import { PickersDay, pickersDayClasses } from '@mui/x-date-pickers/PickersDay'
-import { Controller, Control } from 'react-hook-form'
+import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns'
+import { CalendarPicker, CalendarPickerProps } from '@mui/x-date-pickers/CalendarPicker'
+import { PickersDay } from '@mui/x-date-pickers/PickersDay'
+import { Controller, FieldPath, FieldValues, UseControllerProps } from 'react-hook-form'
+import { setClassName } from '@/utils'
 import styles from '@/styles/share/form/calendar.module.scss'
-import theme from '@/styles/export.module.scss'
 
-const CustCalendarPicker = styled(CalendarPicker)(() => ({
-    width: '100%',
-    maxWidth: '320px'
-}))
+type CalendarFieldProps<
+    TFieldValues extends FieldValues = FieldValues,
+    TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>
+> = UseControllerProps<TFieldValues, TName> & Omit<CalendarPickerProps<Date>, 'date' | 'onChange'> & {
+    label?: string
+    required?: boolean
+    layout?: 'default'
+}
 
-const CustPickersDay = styled(PickersDay)(() => ({
-    fontSize: '16px',
-    color: theme['color-primary'],
-    backgroundColor: 'transparent',
-    borderRadius: 0,
-    [`&.${pickersDayClasses.today}`]: {
-        backgroundColor: theme['color-secondary'],
-        border: 'none',
-    },
-    [`&.${pickersDayClasses.selected}`]: {
-        backgroundColor: theme['color-primary'],
-        '&:hover': {
-            backgroundColor: theme['color-primary'],
-        },
-        '&:focus': {
-            backgroundColor: theme['color-primary'],
-        }
-    }
-}))
-
-const CalendarField = (props: {
-    name: string,
-    control: Control,
-    label?: string,
-    required?: boolean,
-    [restProps: string]: any
-}) => {
-    const {
-        name,
-        control,
-        label = '',
-        required = false,
-        ...rest
-    } = props
-
+const CalendarField = <
+    TFieldValues extends FieldValues = FieldValues,
+    TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>
+>({
+    name,
+    control,
+    label = '',
+    required = false,
+    layout = 'default',
+    ...rest
+}: CalendarFieldProps<TFieldValues, TName>) => {
     const renderDay = (date, selectedDates, pickersDayProps) => (
-        <CustPickersDay {...pickersDayProps} />
+        <PickersDay
+            {...pickersDayProps}
+            classes={{
+                root: styles.date,
+                today: styles.today,
+                selected: styles.selected,
+            }}
+        />
     )
 
     return (
@@ -56,21 +42,23 @@ const CalendarField = (props: {
             name={name}
             control={control}
             rules={{
-                required: required,
+                required,
             }}
             render={({
                 field: { onChange, value, name },
                 fieldState: { error },
-            }) => {
-                return (
-                    <div className={styles.calendar} data-field={name}>
+            }) => (
+                    <div className={setClassName([styles.calendar, styles[`layout-${layout}`]])} data-field={name}>
                         {label ? (
                             <label>{label}</label>
                         ) : null}
-                        <div className={styles.pricker} data-error={!!error}>
+                        <div className={setClassName([styles.root, [!!error, styles.error]])}>
                             <LocalizationProvider dateAdapter={AdapterDateFns}>
-                                <CustCalendarPicker
+                                <CalendarPicker
                                     {...rest}
+                                    classes={{
+                                        root: styles.picker
+                                    }}
                                     date={value ?? null}
                                     onChange={onChange}
                                     renderDay={renderDay}
@@ -78,7 +66,7 @@ const CalendarField = (props: {
                             </LocalizationProvider>
                         </div>
                     </div>
-                )}
+                )
             }
         />
     )

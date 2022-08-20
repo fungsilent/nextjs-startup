@@ -1,11 +1,16 @@
 .calendar {
     label {
         display: block;
-        padding: $basicGap / 2 0;
+        padding: $smallGap 0;
     }
-    .pricker {
-        position: relative;
-        &[data-error='true'] {
+    &.layout-default {
+        .root {
+            color: $color-primary;
+            background-color: $color-white;
+            border: 1px solid $color-primary;
+            border-radius: 0;
+            padding: 0;
+            position: relative;
             &::before {
                 content: '';
                 position: absolute;
@@ -13,12 +18,30 @@
                 bottom: 0;
                 left: 0;
                 right: 0;
-                border: 2px solid $color-error;
-                border-left-width: 6px;
+                border-width: 2px;
+                border-style: solid;
+                transition: border .1s ease-in;
             }
-            &:hover {
+            &.error {
                 &::before {
-                    border-width: 3px;
+                    border-color: $color-error;
+                    border-left-width: 6px;
+                }
+            }
+            .picker {
+                .date {
+                    font-size: 16px;
+                    color: $color-primary;
+                    background-color: transparent;
+                    border-radius: 0;
+                    &.today {
+                        background-color: $color-secondary;
+                        border: none;
+                    }
+                    &.selected {
+                        color: $color-white;
+                        background-color: $color-primary;
+                    }
                 }
             }
         }

@@ -38,32 +38,31 @@ const TextField = <
             render={({
                 field: { onChange, onBlur, value, name },
                 fieldState: { error },
-            }) => {
-                return (
-                    <div className={setClassName([styles.text, styles[`layout-${layout}`]])} data-field={name}>
-                        {label ? (
-                            <label>{label}</label>
-                        ) : null}
-                        <MuiOutlinedInput
-                            {...rest}
-                            name={name}
-                            value={value ?? ''}
-                            onChange={onChange}
-                            onBlur={onBlur}
-                            placeholder={placeholder}
-                            required={required}
-                            error={!!error}
-                            fullWidth={true}
-                            classes={{
-                                root: styles.root,
-                                notchedOutline: styles.outline,
-                                focused: styles.focused,
-                                error: styles.error,
-                                input: styles.input,
-                            }}
-                        />
-                    </div>
-                )}
+            }) => (
+                <div className={setClassName([styles.text, styles[`layout-${layout}`]])} data-field={name}>
+                    {label ? (
+                        <label>{label}</label>
+                    ) : null}
+                    <MuiOutlinedInput
+                        {...rest}
+                        name={name}
+                        value={value ?? ''}
+                        onChange={onChange}
+                        onBlur={onBlur}
+                        placeholder={placeholder}
+                        required={required}
+                        error={!!error}
+                        fullWidth={true}
+                        classes={{
+                            root: styles.root,
+                            notchedOutline: styles.outline,
+                            focused: styles.focused,
+                            error: styles.error,
+                            input: styles.input,
+                        }}
+                    />
+                </div>
+                )
             }
         />
     )
