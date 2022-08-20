@@ -1,69 +1,65 @@
 import { ReactNode } from 'react'
-import { styled } from '@mui/material/styles'
-import Select, { selectClasses } from '@mui/material/Select'
-import { outlinedInputClasses } from '@mui/material/OutlinedInput'
+import MuiSelect, { SelectProps } from '@mui/material/Select'
 import MenuItem from '@mui/material/MenuItem'
-import { Controller, Control } from 'react-hook-form'
+import MuiOutlinedInput, { OutlinedInputProps } from '@mui/material/OutlinedInput'
+import { Controller, FieldPath, FieldValues, UseControllerProps } from 'react-hook-form'
+import { setClassName } from '@/utils'
 import styles from '@/styles/share/form/select.module.scss'
-import theme from '@/styles/export.module.scss'
 
-const CustSelect = styled(Select)(() => ({
-    fontFamily: theme['font-family'],
-    color: theme['color-primary'],
-    backgroundColor: theme['color-while'],
-    border: `1px solid ${theme['color-primary']}`,
-    borderRadius: 0,
-    padding: 0,
-    width: '100%',
-    [`& .${selectClasses.select}`]: {
-        padding: '12px 22px'
-    },
-    [`& .${outlinedInputClasses.notchedOutline}`]: {
-        borderColor: 'unset',
-        transition: 'border .1s ease-in',
-    },
-    [`&.${outlinedInputClasses.error} .${outlinedInputClasses.notchedOutline}`]: {
-        borderColor: theme['color-error'],
-        borderLeftWidth: 6,
-    },
-    [`&.${outlinedInputClasses.focused}:not(.${outlinedInputClasses.error}) .${outlinedInputClasses.notchedOutline}`]: {
-        borderColor: theme['color-secondary'],
-    },
-}))
-
-const SelectField = (props: {
+export type SelectFieldProps<
+    TFieldValues extends FieldValues = FieldValues,
+    TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>
+> = UseControllerProps<TFieldValues, TName> & SelectProps & {
     name: string
-    control: Control
-    children?: ReactNode
     label?: string
     required?: boolean
-    [restProps: string]: any
-}) => {
-    const {
-        name,
-        control,
-        children,
-        label = '',
-        required = false,
-        ...rest
-    } = props
+    children?: ReactNode
+    layout?: 'default'
+}
+
+const Input = (props: OutlinedInputProps) => (
+    <MuiOutlinedInput
+        {...props}
+        fullWidth={true}
+        classes={{
+            root: styles.root,
+            notchedOutline: styles.outline,
+            focused: styles.focused,
+            error: styles.error,
+            input: styles.input,
+        }}
+    />
+)
+
+const SelectField = <
+    TFieldValues extends FieldValues = FieldValues,
+    TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>
+>({
+    name,
+    control,
+    children,
+    label = '',
+    required = false,
+    layout = 'default',
+    ...rest
+}: SelectFieldProps<TFieldValues, TName>) => {
     return (
         <Controller
             name={name}
             control={control}
             rules={{
-                required: required,
+                required,
             }}
             render={({
                 field: { onChange, value, name },
                 fieldState: { error },
             }) => {
                 return (
-                    <div className={styles.select} data-field={name}>
+                    <div className={setClassName([styles.select, styles[`layout-${layout}`]])} data-field={name}>
                         {label ? (
                             <label>{label}</label>
                         ) : null}
-                        <CustSelect
+                        <MuiSelect
                             {...rest}
                             name={name}
                             value={value ?? ''}
@@ -71,9 +67,11 @@ const SelectField = (props: {
                             displayEmpty
                             required={required}
                             error={!!error}
+                            autoWidth={true}
+                            input={<Input/>}
                         >
                             {children}
-                        </CustSelect>
+                        </MuiSelect>
                     </div>
                 )}
             }

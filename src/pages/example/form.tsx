@@ -23,7 +23,7 @@ const Form = () => {
 
     return (
         <div>
-            Page Config
+            <h2>Form</h2>
             <form>
                 <TextField
                     name='text'
@@ -40,16 +40,17 @@ const Form = () => {
                     label='phone'
                     control={control}
                 />
-                {/* <SelectField
+                <SelectField
                     name='select'
                     label='select'
                     control={control}
+                    required={true}
                 >
                     <MenuItem value=''>-</MenuItem>
-                    <MenuItem value=''>-</MenuItem>
-                    <MenuItem value=''>-</MenuItem>
+                    <MenuItem value='1'>Option 1</MenuItem>
+                    <MenuItem value='2'>Option 2</MenuItem>
                 </SelectField>
-                <CalendarField
+                {/* <CalendarField
                     name='calendar'
                     control={control}
                 /> */}

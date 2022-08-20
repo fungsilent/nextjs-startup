@@ -11,8 +11,10 @@ $color-success: #198754;
 $color-error: #D32F2F;
 
 // spacing
-$basicGap: 20px;
-$sectionGap: $basicGap * 3;
+$smallGap: 8px;
+$basicGap: $smallGap * 2;   // 16px
+$boxGap: $smallGap * 3;     // 24px
+$sectionGap: $boxGap * 2;   // 48px
 $lineHeight: 1.4;
 
 // size
@@ -22,4 +24,3 @@ $breakpoint: (
     'tablet': 1000px,
     'mobile': 600px,
 );
-$textboxOverBorder: 200px;
