@@ -23,4 +23,5 @@ export type ApiState = {
 export type ResponseData<Data = unknown> = {
     result: keyof ApiResponseStatus
     data: Data
+    feedback?: string
 }

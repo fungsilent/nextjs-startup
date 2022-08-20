@@ -4,11 +4,11 @@ import useSystem from '@/hooks/useSystem'
 
 const Api = () => {
     // const dispatch = useDispatch()
-    // const counter = useSelector(state => state.normal.counter)
-    // const add = () => dispatch(addCounter())
+    const appState = useSelector(state => state)
     const fetchSystemState = useSystem()
 
-    console.groupCollapsed()
+    console.groupCollapsed('Api State')
+    console.log('appState', appState)
     console.log('fetchSystem', fetchSystemState)
     console.groupEnd()
 

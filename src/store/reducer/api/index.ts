@@ -1,34 +1,21 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { mapApiReducers } from '@/store/utils/api'
-import { ApiState, ApiStatus } from '@/types/api'
+import { createApiSlice } from '@/store/utils/api'
 
 // Actions
 import { fetchSystem } from './system'
 import { addContact } from './contact'
 
-/* TODO: build a api store generation helper function to get initial state and for type checking */
-const defaultApi = {
-    status: ApiStatus.idle,
-    data: null,
-    error: '',
-}
-
-const initialState: ApiState = {
-    fetchSystem: {
-        ...defaultApi,
-    },
-    addContact: {
-        ...defaultApi,
-    },
-}
+const { initialState, mapReducers }  = createApiSlice({
+    fetchSystem,
+    addContact,
+})
 
 const apiSlice = createSlice({
     name: 'api',
     initialState,
     reducers: {},
     extraReducers: builder => {
-        mapApiReducers(builder, fetchSystem, 'fetchSystem')
-        mapApiReducers(builder, addContact, 'addContact')
+        mapReducers(builder)
     }
 })
 

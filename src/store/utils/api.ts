@@ -1,35 +1,14 @@
 import getConfig from 'next/config'
+import { reduce, forEach } from 'lodash'
 import axios, { AxiosResponse } from 'axios'
 import { serialize } from 'object-to-formdata'
 import { createAsyncThunk, ActionReducerMapBuilder, AsyncThunk, AsyncThunkPayloadCreator } from '@reduxjs/toolkit'
-import { ApiStatus, ApiResponseStatus, ResponseData } from '@/types/api'
+import { Api, ApiState, ApiStatus, ApiResponseStatus, ResponseData } from '@/types/api'
 
 const { apiBaseUrl } = getConfig().publicRuntimeConfig
 
 /*
-** mapApiReducers: a helper to map the api status reducers
-*/
-/* TODO: clarify type (Returned, ThunkArg) */
-export const mapApiReducers = <ApiState, Returned, ThunkArg>(
-    builder: ActionReducerMapBuilder<ApiState>,
-    apiAction: AsyncThunk<Returned, ThunkArg, {}>,
-    path: string,
-): void => {
-    builder.addCase(apiAction.pending, state => {
-        state[path].status = ApiStatus.loading
-    })
-    builder.addCase(apiAction.fulfilled, (state, action) => {
-        state[path].status = ApiStatus.successed
-        state[path].data = action.payload
-    })
-    builder.addCase(apiAction.rejected, (state, action) => {
-        state[path].status = ApiStatus.failed
-        state[path].error = action.payload
-    })
-}
-
-/*
-** setApiData: a helper to set common api data
+** setApiData: A helper to set common api data
 */
 export const setApiData = <Data = object>(data: Data, type: string): Data => {
     return {
@@ -41,7 +20,7 @@ export const setApiData = <Data = object>(data: Data, type: string): Data => {
 }
 
 /*
-** ApplyApi: an axios helper to set data and apply
+** ApplyApi: An axios helper to set data and apply
 */
 type ApplyApi = {
     serialize: (endpoint: string, data: {}) => FormData
@@ -59,7 +38,7 @@ export const applyApi: ApplyApi = {
 }
 
 /*
-** createApiThunk: a helper to simplify api thunk creation
+** createApiThunk: A helper to simplify api thunk creation
 */
 export const createApiThunk = <ApiData>(
     type: string,
@@ -78,11 +57,79 @@ export const createApiThunk = <ApiData>(
 }
 
 /*
-** handleResponse: a helper to simplify response handling
+** handleResponse: A helper to simplify response handling
 */
 export const handleResponse = <ApiData>(response: AxiosResponse<ResponseData<ApiData>>) => {
-    if (response.data.result !== ApiResponseStatus[ApiResponseStatus.success]) {
-        throw new Error('Request Failed')
+    switch(response.data.result) {
+        case ApiResponseStatus[ApiResponseStatus.success]: {
+            return response.data.data
+        }
+        case ApiResponseStatus[ApiResponseStatus.fail]: {
+            console.log('Request Error', response.data.feedback)
+            throw new Error('Request Failed')
+        }
+        default: {
+            throw new Error('Unknown Failed')
+        }
     }
-    return response.data.data
+}
+
+/*
+** mapApiReducers: A helper to map the api status reducers
+*/
+export const mapApiReducers = <ApiState, ApiData>(
+    builder: ActionReducerMapBuilder<ApiState>,
+    apiAction: AsyncThunk<ApiData, ApiData, {}>,
+    name: string,
+): void => {
+    builder.addCase(apiAction.pending, state => {
+        state[name].status = ApiStatus.loading
+    })
+    builder.addCase(apiAction.fulfilled, (state, action) => {
+        state[name].status = ApiStatus.successed
+        state[name].data = action.payload
+    })
+    builder.addCase(apiAction.rejected, (state, action) => {
+        state[name].status = ApiStatus.failed
+        state[name].error = action.payload
+    })
+}
+
+/*
+** createApiSlice: A helper to map the api status reducers
+*/
+type CreateApiSlice = (
+    actions: {[action: string]: AsyncThunk<any, any, {}>}
+) => {
+    initialState: ApiState,
+    mapReducers: (builder: ActionReducerMapBuilder<ApiState>) => void
+}
+export const createApiSlice: CreateApiSlice = actions => {
+    const defaultApi: Api = {
+        status: ApiStatus.idle,
+        data: null,
+        error: '',
+    }
+    const { initialState, reducers } = reduce(actions, (combine, action, name) => {
+        combine.initialState = {
+            ...combine.initialState,
+            [name]: { ...defaultApi }
+        }
+        combine.reducers = {
+            ...combine.reducers,
+            [name]: action
+        }
+        return combine
+    }, {
+        initialState: {} as ApiState,
+        reducers: {},   // TODO: type needed?
+    })
+    return {
+        initialState,
+        mapReducers: (builder) => {
+            forEach(reducers, (action, name) => {
+                mapApiReducers(builder, action, name)
+            })
+        }
+    }
 }
