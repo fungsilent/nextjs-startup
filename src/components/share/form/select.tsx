@@ -53,9 +53,8 @@ const SelectField = <
             render={({
                 field: { onChange, value, name },
                 fieldState: { error },
-            }) => {
-                return (
-                    <div className={setClassName([styles.select, styles[`layout-${layout}`]])} data-field={name}>
+            }) => (
+                <div className={setClassName([styles.select, styles[`layout-${layout}`]])} data-field={name}>
                         {label ? (
                             <label>{label}</label>
                         ) : null}
@@ -73,7 +72,7 @@ const SelectField = <
                             {children}
                         </MuiSelect>
                     </div>
-                )}
+                )
             }
         />
     )
