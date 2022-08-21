@@ -1,10 +1,7 @@
-import { FieldPath, FieldValues } from 'react-hook-form'
+import { FieldValues } from 'react-hook-form'
 import TextField, { TextFieldProps } from '@/components/share/form/text'
 
-const PhoneField = <
-    TFieldValues extends FieldValues = FieldValues,
-    TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>
->({
+const PhoneField = <FV extends FieldValues = FieldValues>({
     name,
     control,
     label,
@@ -13,7 +10,7 @@ const PhoneField = <
     pattern = /^[0-9]{8}$/i,
     layout,
     ...rest
-}: TextFieldProps<TFieldValues, TName>) => (
+}: TextFieldProps<FV>) => (
     <TextField
         {...rest}
         name={name}

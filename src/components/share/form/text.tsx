@@ -1,12 +1,9 @@
 import MuiOutlinedInput, { OutlinedInputProps } from '@mui/material/OutlinedInput'
-import { Controller, FieldPath, FieldValues, UseControllerProps } from 'react-hook-form'
+import { Controller, FieldValues, UseControllerProps } from 'react-hook-form'
 import { setClassName } from '@/utils'
 import styles from '@/styles/share/form/text.module.scss'
 
-export type TextFieldProps<
-    TFieldValues extends FieldValues = FieldValues,
-    TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>
-> = UseControllerProps<TFieldValues, TName> & OutlinedInputProps & {
+export type TextFieldProps<FV> = UseControllerProps<FV> & OutlinedInputProps & {
     label?: string
     placeholder?: string
     required?: boolean
@@ -14,10 +11,7 @@ export type TextFieldProps<
     layout?: 'default'
 }
 
-const TextField = <
-    TFieldValues extends FieldValues = FieldValues,
-    TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>
->({
+const TextField = <FV extends FieldValues = FieldValues>({
     name,
     control,
     label = '',
@@ -26,45 +20,43 @@ const TextField = <
     pattern = null,
     layout = 'default',
     ...rest
-}: TextFieldProps<TFieldValues, TName>) => {
-    return (
-        <Controller
-            name={name}
-            control={control}
-            rules={{
-                required,
-                pattern,
-            }}
-            render={({
-                field: { onChange, onBlur, value, name },
-                fieldState: { error },
-            }) => (
-                <div className={setClassName([styles.text, styles[`layout-${layout}`]])} data-field={name}>
-                    {label ? (
-                        <label>{label}</label>
-                    ) : null}
-                    <MuiOutlinedInput
-                        {...rest}
-                        name={name}
-                        value={value ?? ''}
-                        onChange={onChange}
-                        onBlur={onBlur}
-                        placeholder={placeholder}
-                        required={required}
-                        error={!!error}
-                        fullWidth={true}
-                        classes={{
-                            root: styles.root,
-                            notchedOutline: styles.outline,
-                            focused: styles.focused,
-                            error: styles.error,
-                            input: styles.input,
-                        }}
-                    />
-                </div>
-                )
-            }
-        />
-    )
-}
+}: TextFieldProps<FV>) => (
+    <Controller
+        name={name}
+        control={control}
+        rules={{
+            required,
+            pattern,
+        }}
+        render={({
+            field: { onChange, onBlur, value, name },
+            fieldState: { error },
+        }) => (
+            <div className={setClassName([styles.text, styles[`layout-${layout}`]])} data-field={name}>
+                {label ? (
+                    <label>{label}</label>
+                ) : null}
+                <MuiOutlinedInput
+                    {...rest}
+                    name={name}
+                    value={value ?? ''}
+                    onChange={onChange}
+                    onBlur={onBlur}
+                    placeholder={placeholder}
+                    required={required}
+                    error={!!error}
+                    fullWidth={true}
+                    classes={{
+                        root: styles.root,
+                        notchedOutline: styles.outline,
+                        focused: styles.focused,
+                        error: styles.error,
+                        input: styles.input,
+                    }}
+                />
+            </div>
+        )}
+    />
+)
+
 export default TextField

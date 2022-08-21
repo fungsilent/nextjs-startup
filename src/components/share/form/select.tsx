@@ -2,14 +2,11 @@ import { ReactNode } from 'react'
 import MuiSelect, { SelectProps } from '@mui/material/Select'
 import MenuItem from '@mui/material/MenuItem'
 import MuiOutlinedInput, { OutlinedInputProps } from '@mui/material/OutlinedInput'
-import { Controller, FieldPath, FieldValues, UseControllerProps } from 'react-hook-form'
+import { Controller, FieldValues, UseControllerProps } from 'react-hook-form'
 import { setClassName } from '@/utils'
 import styles from '@/styles/share/form/select.module.scss'
 
-export type SelectFieldProps<
-    TFieldValues extends FieldValues = FieldValues,
-    TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>
-> = UseControllerProps<TFieldValues, TName> & SelectProps & {
+type SelectFieldProps<FV> = UseControllerProps<FV> & SelectProps & {
     name: string
     label?: string
     required?: boolean
@@ -31,10 +28,7 @@ const Input = (props: OutlinedInputProps) => (
     />
 )
 
-const SelectField = <
-    TFieldValues extends FieldValues = FieldValues,
-    TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>
->({
+const SelectField = <FV extends FieldValues = FieldValues>({
     name,
     control,
     children,
@@ -42,41 +36,39 @@ const SelectField = <
     required = false,
     layout = 'default',
     ...rest
-}: SelectFieldProps<TFieldValues, TName>) => {
-    return (
-        <Controller
-            name={name}
-            control={control}
-            rules={{
-                required,
-            }}
-            render={({
-                field: { onChange, value, name },
-                fieldState: { error },
-            }) => (
-                <div className={setClassName([styles.select, styles[`layout-${layout}`]])} data-field={name}>
-                        {label ? (
-                            <label>{label}</label>
-                        ) : null}
-                        <MuiSelect
-                            {...rest}
-                            name={name}
-                            value={value ?? ''}
-                            onChange={onChange}
-                            displayEmpty
-                            required={required}
-                            error={!!error}
-                            autoWidth={true}
-                            input={<Input/>}
-                        >
-                            {children}
-                        </MuiSelect>
-                    </div>
-                )
-            }
-        />
-    )
-}
+}: SelectFieldProps<FV>) => (
+    <Controller
+        name={name}
+        control={control}
+        rules={{
+            required,
+        }}
+        render={({
+            field: { onChange, value, name },
+            fieldState: { error },
+        }) => (
+            <div className={setClassName([styles.select, styles[`layout-${layout}`]])} data-field={name}>
+                {label ? (
+                    <label>{label}</label>
+                ) : null}
+                <MuiSelect
+                    {...rest}
+                    name={name}
+                    value={value ?? ''}
+                    onChange={onChange}
+                    displayEmpty
+                    required={required}
+                    error={!!error}
+                    autoWidth={true}
+                    input={<Input/>}
+                >
+                    {children}
+                </MuiSelect>
+            </div>
+        )}
+    />
+)
+
 export default SelectField
 
 export {
