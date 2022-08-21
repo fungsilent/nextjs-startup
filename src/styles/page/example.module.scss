@@ -8,5 +8,14 @@
     background-color: $color-primary;
     h2 {
         border-bottom: 1px solid;
+        @include media('desktop', true) {
+            background-color: darkblue;
+        }
+        @include media('tablet', true) {
+            background-color: darkred;
+        }
+        @include media('mobile', true) {
+            background-color: darkgreen;
+        }
     }
 }

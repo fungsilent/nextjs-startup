@@ -25,13 +25,27 @@
     @return $result;
 }
 
-@mixin media($key) {
+@mixin media($key, $only: false) {
     @if ($key == 'desktop') {
-        @media (min-width: map.get($breakpoint, $key)) {
-            @content;
+        @if ($only == true) {
+            @media (min-width: (map.get($breakpoint, $key) + 1px)) {
+                @content;
+            }
+        } @else {
+            @error 'Remove media. The result is same as without using media.';
         }
-    } @else {
-        @media (max-width: map.get($breakpoint, $key)) {
+    } @else if ($key == 'tablet') {
+        @if ($only == true) {
+            @media (max-width: map.get($breakpoint, 'desktop')) and (min-width: (map.get($breakpoint, $key) + 1px)) {
+                @content;
+            }
+        } @else {
+            @media (max-width: map.get($breakpoint, 'desktop')) {
+                @content;
+            }
+        }
+    } @else if ($key == 'mobile') {
+        @media (max-width: map.get($breakpoint, 'tablet')) {
             @content;
         }
     }

@@ -1,5 +1,6 @@
 import _ from 'lodash'
 import Link from '@/components/share/link'
+import useResponsive from '@/hooks/useResponsive'
 import styles from '@/styles/page/example.module.scss'
 
 const routes = [
@@ -12,6 +13,8 @@ const routes = [
 ]
 
 const Demo = () => {
+    const responsive = useResponsive()
+    console.log('> responsive', responsive)
     return (
         <div className={styles.page}>
             <h2>Example page</h2>
