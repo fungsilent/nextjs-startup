@@ -1,5 +1,5 @@
 import { useRef, useMemo, useCallback } from 'react'
-import { useFirstMountState, useToggle } from 'react-use'
+import { useFirstMountState, useUpdate } from 'react-use'
 import {useSelector as useReduxSelector, useDispatch as useReduxDispatch, TypedUseSelectorHook } from 'react-redux'
 import { AppState, AppDispatch } from '@/store'
 import { ApiState, Api, ApiStatus } from '@/types/api'
@@ -30,7 +30,7 @@ export const useApi = <Data>(
     } = options
     // State control
     const isMount = useFirstMountState()
-    const [, toogleReRender] = useToggle(false)
+    const doReRender = useUpdate()
 
     // Store
     const apiState = useSelector((state) => state.api[apiKey])
@@ -70,7 +70,7 @@ export const useApi = <Data>(
             isSuccessed: false,
             isFailed: false,
         }
-        if (reRender) toogleReRender()
+        if (reRender) doReRender()
     }, [])
 
     return {

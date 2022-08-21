@@ -1,8 +1,12 @@
+import moment from 'moment'
+import { useUpdate } from 'react-use'
 import { useDispatch, useSelector } from '@/hooks/useStore'
 import { FetchSystemData } from '@/store/reducer/api/system'
 import useSystem from '@/hooks/useSystem'
+import Button from '@/components/share/button'
 
 const Api = () => {
+    const doReRender = useUpdate()
     // const dispatch = useDispatch()
     const appState = useSelector(state => state)
     const fetchSystemState = useSystem()
@@ -29,6 +33,7 @@ const Api = () => {
                 <li>isSuccessed = [{fetchSystemState.isSuccessed ? 'true' : 'false'}]</li>
                 <li>isFailed = [{fetchSystemState.isFailed ? 'true' : 'false'}]</li>
             </ul>
+            <Button onClick={doReRender}>Render<br/>{moment().format()}</Button>
         </div>
     )
 }

@@ -1,13 +1,13 @@
 export enum ApiStatus {
-    'idle',
-    'loading',
-    'successed',
-    'failed',
+    idle = 'idle',
+    loading = 'loading',
+    successed = 'successed',
+    failed = 'failed',
 }
 
 export enum ApiResponseStatus {
-    'success',
-    'fail',
+    success = 'success',
+    fail = 'fail',
 }
 
 export type Api<Data = unknown> = {

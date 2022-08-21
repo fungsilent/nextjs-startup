@@ -61,10 +61,10 @@ export const createApiThunk = <ApiData>(
 */
 export const handleResponse = <ApiData>(response: AxiosResponse<ResponseData<ApiData>>) => {
     switch(response.data.result) {
-        case ApiResponseStatus[ApiResponseStatus.success]: {
+        case ApiResponseStatus.success: {
             return response.data.data
         }
-        case ApiResponseStatus[ApiResponseStatus.fail]: {
+        case ApiResponseStatus.fail: {
             console.log('Request Error', response.data.feedback)
             throw new Error('Request Failed')
         }
