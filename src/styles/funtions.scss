@@ -45,8 +45,12 @@
             }
         }
     } @else if ($key == 'mobile') {
-        @media (max-width: map.get($breakpoint, 'tablet')) {
-            @content;
+        @if ($only == true) {
+            @error 'Remove true. The result is same as without passing true';
+        } @else {
+            @media (max-width: map.get($breakpoint, 'tablet')) {
+                @content;
+            }
         }
     }
 }
