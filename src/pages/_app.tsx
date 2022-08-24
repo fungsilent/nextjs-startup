@@ -6,10 +6,11 @@ import Header from '@/components/part/header'
 import Footer from '@/components/part/footer'
 import GoTop from '@/components/part/goTop'
 import useConfig from '@/hooks/useConfig'
+import { NextAppProps } from '@/types/app'
 import '@/styles/globals.scss'
 
-const App = ({ Component, pageProps }: AppProps) => {
-    const { headerClassName, ...restProps } = pageProps
+const App = ({ Component, pageProps }: NextAppProps) => {
+    const { header, page } = pageProps
     const config = useConfig()
     return (
         <Provider store={appStore}>
@@ -31,8 +32,8 @@ const App = ({ Component, pageProps }: AppProps) => {
                 ]}
             />
             <div className='app'>
-                <Header className={headerClassName}/>
-                <Component {...restProps}/>
+                <Header {...header}/>
+                <Component {...page}/>
                 <GoTop/>
                 <Footer/>
             </div>

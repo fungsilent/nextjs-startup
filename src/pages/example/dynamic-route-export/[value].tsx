@@ -5,8 +5,8 @@ import Link from '@/components/share/link'
 import { findData } from '@/utils'
 
 const list = [
-    { value: 'param 1', data: 'data-1 -> ABC' },
-    { value: 'param 2', data: 'data-2 -> DEF' },
+    { value: 'param-1', data: 'data-1 -> ABC' },
+    { value: 'param-2', data: 'data-2 -> DEF' },
 ]
 
 const DynamicRouteExport = ({ data }) => {
@@ -21,12 +21,12 @@ const DynamicRouteExport = ({ data }) => {
             [data] = {data}
             <br/>
             <br/>
-            <Link href='/example/dynamic-route-export/param 1'>
+            <Link href='/example/dynamic-route-export/param-1'>
                 Link to param-1
             </Link>
             <br/>
             <br/>
-            <Link href='/example/dynamic-route-export/param 2'>
+            <Link href='/example/dynamic-route-export/param-2'>
                 Link to param-2
             </Link>
         </div>
@@ -39,7 +39,9 @@ export const getStaticProps: GetStaticProps = async context => {
     })
     return {
         props: {
-            data,
+            page: {
+                data,
+            },
         }
     }
 }

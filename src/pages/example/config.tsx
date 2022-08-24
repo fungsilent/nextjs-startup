@@ -1,20 +1,24 @@
 import { GetStaticProps } from 'next'
-import _ from 'lodash'
-import { PageProps } from '@/types/app'
+import { AppProps, PageProps } from '@/types/app'
 
-const Config = () => {
-
+const Config = ({ id }: PageProps) => {
     return (
         <div>
             Page Config
+            <div>id - [{id}]</div>
         </div>
     )
 }
 
-export const getStaticProps: GetStaticProps<PageProps> = async () => {
+export const getStaticProps: GetStaticProps<AppProps> = async () => {
     return {
         props: {
-            headerClassName: 'cust-header-class'
+            header: {
+                className: 'home-header',
+            },
+            page: {
+                id: 1
+            },
         }
     }
 }
