@@ -10,6 +10,7 @@ const routes = [
     { name: 'Form', link: '/example/form' },
     { name: 'Store', link: '/example/store' },
     { name: 'Api', link: '/example/api' },
+    { name: 'Share', link: '/example/share'}
 ]
 
 const Demo = () => {

@@ -1,0 +1,45 @@
+.accordion {
+    background-color: transparent;
+    overflow: hidden;
+    &::before {
+        content: unset;
+    }
+    .header {
+        padding: 0;
+        min-height: 0;
+        .headerContent {
+            margin: 0;
+        }
+        .icon {
+            width: 20px;
+            height: 20px;
+            text-align: center;
+            // position: relative;
+            // &::before {
+            //     content: '';
+            //     position: absolute;
+            //     top: 0;
+            //     bottom: 0;
+            //     left: 0;
+            //     right: 0;
+            //     background: url('/images/icon/arrow.svg') center/contain no-repeat;
+            // }
+        }
+    }
+    .content {
+        padding: 0;
+    }
+    &.layout-default {
+        .header {
+            padding: $basicGap;
+            background-color: $color-primary;
+            .icon {
+                color: $color-secondary;
+            }
+        }
+        .content {
+            padding: $basicGap;
+            background-color: $color-secondary;
+        }
+    }
+}
