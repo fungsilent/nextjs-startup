@@ -11,7 +11,7 @@ const Share = () => {
                 {_.map(Array.from({ length: 3 }), (i, key) => (
                     <Accordion
                         key={key}
-                        header={<span>Header</span>}   
+                        header={<span>Header</span>}
                     >
                         <span>Content</span>
                     </Accordion>

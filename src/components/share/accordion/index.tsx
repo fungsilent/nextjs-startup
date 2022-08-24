@@ -1,5 +1,5 @@
 import { ReactNode } from 'react'
-import MuiAccordion from '@mui/material/Accordion'
+import MuiAccordion, { AccordionProps as MuiAccordionProps } from '@mui/material/Accordion'
 import MuiAccordionSummary from '@mui/material/AccordionSummary'
 import MuiAccordionDetails from '@mui/material/AccordionDetails'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -7,8 +7,9 @@ import { faAngleDown } from '@fortawesome/free-solid-svg-icons'
 import { setClassName } from '@/utils'
 import styles from '@/styles/share/accordion/default.module.scss'
 
-const Accordion = (props: {
+export type AccordionProps = Omit<MuiAccordionProps, 'className'> & {
     header?: ReactNode
+    icon?: ReactNode
     children?: ReactNode
     className?: {
         root?: string
@@ -16,21 +17,22 @@ const Accordion = (props: {
         content?: string
     },
     layout?: 'default'
-}) => {
-    const {
-        header,
-        children,
-        layout = 'default',
-        className: {
-            root: rootClassName,
-            header: headerClassName,
-            content: contentClassName,
-        } = {},
-        ...rest
-    } = props
-    
+}
+
+const Accordion = ({
+    header,
+    icon,
+    children,
+    layout = 'default',
+    className: {
+        root: rootClassName,
+        header: headerClassName,
+        content: contentClassName,
+    } = {},
+    ...rest
+}: AccordionProps) => {
     /* TODO: use Icon */
-    const icon = (
+    const renderIcon = icon ?? (
         <i className={styles.icon}>
             <FontAwesomeIcon icon={faAngleDown} fontSize={20}/>
         </i>
@@ -47,7 +49,7 @@ const Accordion = (props: {
             }}
         >
             <MuiAccordionSummary
-                expandIcon={icon}
+                expandIcon={renderIcon}
                 classes={{
                     root: setClassName([styles.header, headerClassName]),
                     content: styles.headerContent
