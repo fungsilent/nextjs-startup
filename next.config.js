@@ -1,19 +1,13 @@
 const nextConfig = {
-    images: {
-        unoptimized: true,
-        loader: 'akamai',
-        path: '/',
-    },
-    sassOptions: {    
+    // Base Config
+    sassOptions: {
+        includePaths: [path.join(__dirname, 'src/styles')],
         additionalData: `
             @use 'sass:map';
-            @import 'src/styles/variables.scss';
-            @import 'src/styles/funtions.scss';
+            @import 'variables.scss';
+            @import 'funtions.scss';
         `,
     },
-    exportPathMap: async () => ({
-        '/': { page: '/' },
-    }),
     redirects: async () => ([
         {
             source: '/',
@@ -21,6 +15,15 @@ const nextConfig = {
             permanent: true,
         },
     ]),
+    // Build Config
+    exportPathMap: async () => ({
+        '/': { page: '/' },
+    }),
+    images: {
+        loader: 'akamai',
+        path: '/',
+    },
+    // Runtime Config
     publicRuntimeConfig: {
         seo: {
             siteName: 'SiteName',
