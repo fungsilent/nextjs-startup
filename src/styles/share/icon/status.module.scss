@@ -1,16 +1,20 @@
+$size: 20px;
 @mixin base-icon {
     $size: 20px;
     align-self: center;
     font-size: $size;
     width: $size;
     height: $size;
-    .bg {
-        color: transparent;
+    .icon {
+        // For mui loader
+        width: $size !important;
+        height: $size !important;
     }
 }
 
 .status {
     &.loader {
+        // TODO: change loader to fontawesome
         @include base-icon;
         color: $color-primary;
     }
