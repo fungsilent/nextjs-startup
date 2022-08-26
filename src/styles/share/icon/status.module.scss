@@ -1,0 +1,29 @@
+@mixin base-icon {
+    $size: 20px;
+    align-self: center;
+    font-size: $size;
+    width: $size;
+    height: $size;
+    .bg {
+        color: transparent;
+    }
+}
+
+.status {
+    &.loader {
+        @include base-icon;
+        color: $color-primary;
+    }
+    &.success {
+        @include base-icon;
+        .bg {
+            color: $color-success;
+        }
+    }
+    &.error {
+        @include base-icon;
+        .bg {
+            color: $color-error;
+        }
+    }
+}
