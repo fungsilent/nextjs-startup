@@ -4,12 +4,13 @@ import axios, { AxiosResponse } from 'axios'
 import { serialize } from 'object-to-formdata'
 import { createAsyncThunk, ActionReducerMapBuilder, AsyncThunk, AsyncThunkPayloadCreator } from '@reduxjs/toolkit'
 import { Api, ApiState, ApiStatus, ApiResponseStatus, ResponseData } from '@/types/api'
+import Promise from 'bluebird'
 
 const { apiBaseUrl } = getConfig().publicRuntimeConfig
 
-/*
-** setApiData: A helper to set common api data
-*/
+/**
+ * setApiData: A helper to set common api data
+ */
 export const setApiData = <Data = object>(data: Data, type: string): Data => {
     return {
         ...data,
@@ -19,9 +20,9 @@ export const setApiData = <Data = object>(data: Data, type: string): Data => {
     }
 }
 
-/*
-** ApplyApi: An axios helper to set data and apply
-*/
+/**
+ * applyApi: An axios helper to set data and apply
+ */
 type ApplyApi = {
     serialize: (endpoint: string, data: {}) => FormData
     post: <ApiData>(endpoint: string, data: {}, config?: {}) => Promise<AxiosResponse<ResponseData<ApiData>>>
@@ -37,16 +38,43 @@ export const applyApi: ApplyApi = {
     },
 }
 
-/*
-** createApiThunk: A helper to simplify api thunk creation
-*/
+/**
+ * createApiThunk: A helper to simplify api thunk creation
+ */
 export const createApiThunk = <ApiData>(
     type: string,
     thunk: AsyncThunkPayloadCreator<ApiData, ApiData>,
+    options?: {
+        debug?: boolean
+        status?: Exclude<ApiStatus, ApiStatus.idle>
+        data?: ApiData
+        delay?: number
+    }
 ): AsyncThunk<ApiData, ApiData, {}> => {
+    const {
+        status,
+        debug = false,
+        data = null,
+        delay = 0,
+    } = options ?? {}
     return createAsyncThunk<ApiData, ApiData, {}>(
         type,
         async (arg, thunkApi) => {
+            // Debug
+            if (debug) {
+                switch(status) {
+                    case ApiStatus.successed: {
+                        return new Promise.delay(delay).then(() => data)
+                    }
+                    case ApiStatus.failed: {
+                        return new Promise.delay(delay).then(() => thunkApi.rejectWithValue('Debug: Request Failed'))
+                    }
+                    case ApiStatus.loading:
+                    default: {
+                        return new Promise(() => {}) 
+                    }
+                }
+            }
             try {
                 return await thunk(arg, thunkApi)
             } catch (err) {
@@ -56,9 +84,9 @@ export const createApiThunk = <ApiData>(
     )
 }
 
-/*
-** handleResponse: A helper to simplify response handling
-*/
+/**
+ * handleResponse: A helper to simplify response handling
+ */
 export const handleResponse = <ApiData>(response: AxiosResponse<ResponseData<ApiData>>) => {
     switch(response.data.result) {
         case ApiResponseStatus.success: {
@@ -74,9 +102,9 @@ export const handleResponse = <ApiData>(response: AxiosResponse<ResponseData<Api
     }
 }
 
-/*
-** mapApiReducers: A helper to map the api status reducers
-*/
+/**
+ * mapApiReducers: A helper to map the api status reducers
+ */
 export const mapApiReducers = <ApiState, ApiData>(
     builder: ActionReducerMapBuilder<ApiState>,
     apiAction: AsyncThunk<ApiData, ApiData, {}>,
@@ -95,9 +123,9 @@ export const mapApiReducers = <ApiState, ApiData>(
     })
 }
 
-/*
-** createApiSlice: A helper to map the api status reducers
-*/
+/**
+ * createApiSlice: A helper to map the api status reducers
+ */
 type CreateApiSlice = (
     actions: {[action: string]: AsyncThunk<any, any, {}>}
 ) => {

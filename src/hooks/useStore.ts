@@ -44,8 +44,8 @@ export const useApi = <Data>(
         isFailed: initReset ? false : apiState.status === ApiStatus.failed,
     })
 
-    /*
-    ** Watch apiState change use useMemo dependency
+    /**
+     * Watch apiState change use useMemo dependency
      */
     useMemo(() => {
         if (isMount) return
@@ -59,8 +59,8 @@ export const useApi = <Data>(
         }
     }, [apiState])
 
-    /*
-    ** Provide an outside function to reset BooleanStatus and trigger re-render or not
+    /**
+     * Provide an outside function to reset BooleanStatus and trigger re-render or not
      */
     const resetApiState = useCallback((reRender?: boolean) => {
         state.current = {
