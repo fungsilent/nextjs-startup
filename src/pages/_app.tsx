@@ -7,6 +7,7 @@ import Footer from '@/components/part/footer'
 import GoTop from '@/components/part/goTop'
 import useConfig from '@/hooks/useConfig'
 import { NextAppProps } from '@/types/app'
+import '@fortawesome/fontawesome-svg-core/styles.css'
 import '@/styles/globals.scss'
 
 const App = ({ Component, pageProps }: NextAppProps) => {

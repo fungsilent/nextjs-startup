@@ -1,20 +1,26 @@
-import NextImage, { ImageProps } from 'next/image'
+import NextImage, { ImageProps as NextImageProps } from 'next/image'
 import { setClassName } from '@/utils'
 import styles from '@/styles/share/image.module.scss'
 
-type Props = ImageProps & {
+export type ImageProps = Omit<NextImageProps, 'className'> & {
     imageClassName?: string
+    className?: {
+        root?: string
+        image?: string
+    }
 }
 
 const Image = ({
-    className = '',
-    imageClassName = '',
+    className: {
+        root: rootClassName,
+        image: imageClassName,
+    } = {},
     unoptimized = true,
     src, alt, layout, sizes, priority, loading, lazyRoot, lazyBoundary, quality, width, height, style, objectFit, objectPosition, onLoadingComplete, placeholder, blurDataURL,
     ...rest
-}: Props) => {
+}: ImageProps) => {
     return (
-        <div className={setClassName([styles.image, className])} {...rest}>
+        <div className={setClassName([styles.image, rootClassName])} {...rest}>
             <NextImage
                 className={imageClassName}
                 // No handling props

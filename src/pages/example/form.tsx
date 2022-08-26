@@ -31,6 +31,7 @@ const Form = () => {
                         name='text'
                         label='text'
                         control={control}
+                        success
                     />
                     <EmailField
                         name='email'
@@ -56,7 +57,7 @@ const Form = () => {
                         control={control}
                         required={true}
                     />
-                    <Button onClick={logFormData}>FormData</Button>
+                    <Button onClick={logFormData} loading>FormData</Button>
                     <Button onClick={handleSubmit(onSubmit)}>Submit</Button>
                 </FormProvider>
             </form>

@@ -1,19 +1,52 @@
+import _find from 'lodash/find'
 import MuiOutlinedInput, { OutlinedInputProps } from '@mui/material/OutlinedInput'
 import { Controller, FieldValues, UseControllerProps } from 'react-hook-form'
+import LoaderIcon from '@/components/share/icon/loader'
+import SuccessIcon from '@/components/share/icon/success'
+import ErrorIcon from '@/components/share/icon/error'
 import { setClassName } from '@/utils'
 import styles from '@/styles/share/form/text.module.scss'
 
-export type TextFieldProps<FV> = UseControllerProps<FV> & OutlinedInputProps & {
+export type TextFieldProps<FV> = UseControllerProps<FV> & OutlinedInputProps & StatusProps & {
     label?: string
     placeholder?: string
     required?: boolean
     pattern?: RegExp
-    layout?: 'default'
+    layout?: 'default' | 'rounded'
 }
 
+type StatusProps = {
+    loading?: boolean
+    success?: boolean
+    error?: boolean
+}
+
+const Status = ({
+    loading,
+    success,
+    error,
+}: StatusProps) => {
+    const hasStatus = _find([
+        [error, ErrorIcon],
+        [success, SuccessIcon],
+        [loading, LoaderIcon],
+    ], v => v[0])
+    if (!hasStatus) return null
+    const Component = hasStatus[1]
+    return (
+        <div className={styles.status}>
+            <Component className={{ root: styles.icon }}/>
+        </div>
+    )
+}
+
+/* TODO: how to control form error and status error icon? */
 const TextField = <FV extends FieldValues = FieldValues>({
     name,
     control,
+    loading,
+    success,
+    error,
     label = '',
     placeholder = '',
     required = false,
@@ -30,7 +63,7 @@ const TextField = <FV extends FieldValues = FieldValues>({
         }}
         render={({
             field: { onChange, onBlur, value, name },
-            fieldState: { error },
+            fieldState: { error: formError },
         }) => (
             <div className={setClassName([styles.text, styles[`layout-${layout}`]])} data-field={name}>
                 {label ? (
@@ -44,7 +77,7 @@ const TextField = <FV extends FieldValues = FieldValues>({
                     onBlur={onBlur}
                     placeholder={placeholder}
                     required={required}
-                    error={!!error}
+                    error={!!formError}
                     fullWidth={true}
                     classes={{
                         root: styles.root,
@@ -53,6 +86,13 @@ const TextField = <FV extends FieldValues = FieldValues>({
                         error: styles.error,
                         input: styles.input,
                     }}
+                    endAdornment={(
+                        <Status
+                            loading={loading}
+                            success={success}
+                            error={error}
+                        />
+                    )}
                 />
             </div>
         )}

@@ -3,26 +3,39 @@
         display: block;
         padding: $smallGap 0;
     }
+    .root {
+        padding: 0;
+        .status {
+            padding: 0 $smallGap;
+        }
+    }
     &.layout-default {
         .root {
             color: $color-primary;
             background-color: $color-white;
-            border: 1px solid $color-primary;
             border-radius: 0;
-            padding: 0;
-            &.error {
+            &:hover {
                 .outline {
-                    border-color: $color-error;
-                    border-left-width: 6px;
+                    border-color: $color-primary;
                 }
             }
-            &.focused:not(.error) {
+            &.error {
                 .outline {
-                    border-color: $color-secondary;
+                    border-left-width: 6px;
+                    border-color: $color-error;
+                }
+            }
+            &.focused {
+                background-color: color($color-lightgray, 40);
+                &:not(.error) {
+                    .outline {
+                        border-color: $color-secondary;
+                    }
                 }
             }
             .outline {
-                border-color: unset;
+                border-width: 2px;
+                border-color: $color-black;
                 transition: border .1s ease-in;
             }
             .input {
