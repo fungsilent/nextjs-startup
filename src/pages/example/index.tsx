@@ -4,7 +4,7 @@ import useResponsive from '@/hooks/useResponsive'
 import styles from '@/styles/page/example.module.scss'
 
 const routes = [
-    { name: 'useConfig', link: '/example/config' },
+    { name: 'Config', link: '/example/config' },
     { name: 'SEO', link: '/example/seo' },
     { name: 'Dynamic Route Export', link: '/example/dynamic-route-export/param-1' },
     { name: 'Form', link: '/example/form' },
