@@ -31,6 +31,8 @@
     }
     &.layout-default {
         .header {
+            display: flex;
+            gap: $basicGap;
             padding: $basicGap;
             background-color: $color-primary;
             .icon {
