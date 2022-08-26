@@ -16,9 +16,9 @@ Start with auto-reload via nodemon
 npm run dev
 ```
 
-The website will listen on `3000` port
+The website will listen on `4000` port
 ```
-http://localhost:3000/
+http://localhost:4000/
 ```
 
 ## For production
