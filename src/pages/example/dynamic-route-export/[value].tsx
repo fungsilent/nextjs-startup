@@ -2,7 +2,9 @@ import _ from 'lodash'
 import { GetStaticProps, GetStaticPaths } from 'next'
 import { useRouter } from 'next/router'
 import Link from '@/components/share/link'
+import Display from '@/components/page/example/display'
 import { findData } from '@/utils'
+import styles from '@/styles/page/example.module.scss'
 
 const list = [
     { value: 'param-1', data: 'data-1 -> ABC' },
@@ -13,19 +15,13 @@ const DynamicRouteExport = ({ data }) => {
     const router = useRouter()
     const { value } = router.query
     return (
-        <div>
-            Dynamic Route Export:
-            <br/>
-            [value] = {value}
-            <br/>
-            [data] = {data}
-            <br/>
-            <br/>
+        <div className={styles.layout}>
+            <h2>Dynamic Route Export:</h2>
+            <Display v={{ value }}/>
+            <Display v={{ data }}/>
             <Link href='/example/dynamic-route-export/param-1'>
                 Link to param-1
             </Link>
-            <br/>
-            <br/>
             <Link href='/example/dynamic-route-export/param-2'>
                 Link to param-2
             </Link>

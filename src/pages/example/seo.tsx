@@ -1,18 +1,19 @@
 import Head from 'next/head'
 import _ from 'lodash'
+import Display from '@/components/page/example/display'
+import styles from '@/styles/page/example.module.scss'
 
 export default function SEO({ response, title, description }) {
     console.log(response)
     return (
-        <div>
+        <div className={styles.layout}>
             <Head>
                 <title>{title}</title>
                 <meta name='description' content={description} />
             </Head>
-            <div>
-                <p>title: {title}</p>
-                <p>description: {description}</p>
-            </div>
+            <h2>SEO</h2>
+            <Display v={{ title }}/>
+            <Display v={{ description }}/>
         </div>
     )
   }

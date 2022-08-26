@@ -1,11 +1,13 @@
 import { GetStaticProps } from 'next'
+import Display from '@/components/page/example/display'
 import { AppProps, PageProps } from '@/types/app'
+import styles from '@/styles/page/example.module.scss'
 
 const Config = ({ id }: PageProps) => {
     return (
-        <div>
-            Page Config
-            <div>id - [{id}]</div>
+        <div className={styles.layout}>
+            <h2>Page Config</h2>
+            <Display v={{ id }}/>
         </div>
     )
 }

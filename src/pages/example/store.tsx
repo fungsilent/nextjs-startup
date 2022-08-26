@@ -1,6 +1,8 @@
 import { useDispatch, useSelector } from '@/hooks/useStore'
 import { addCounter } from '@/store/reducer/normal'
+import Display from '@/components/page/example/display'
 import Button from '@/components/share/button'
+import styles from '@/styles/page/example.module.scss'
 
 const Store = () => {
     const dispatch = useDispatch()
@@ -10,12 +12,9 @@ const Store = () => {
     console.log('> counterA', counterA)
 
     return (
-        <div>
+        <div className={styles.layout}>
             <h2>Store</h2>
-
-            <br/>
-            <div>counterA = [{counterA}]</div>
-            <br/>
+            <Display v={{ counterA }}/>
             <Button onClick={add}>Add Counter</Button>
         </div>
     )

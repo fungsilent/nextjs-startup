@@ -1,6 +1,8 @@
 import { useForm, FormProvider } from 'react-hook-form'
 import { TextField, EmailField, PhoneField, SelectField, MenuItem, CalendarField } from '@/components/share/form'
+import Display from '@/components/page/example/display'
 import Button from '@/components/share/button'
+import styles from '@/styles/page/example.module.scss'
 
 type FormData = {
     text: string
@@ -23,46 +25,44 @@ const Form = () => {
     }
 
     return (
-        <div>
+        <form className={styles.layout}>
             <h2>Form</h2>
-            <form>
-                <FormProvider {...methods}>
-                    <TextField
-                        name='text'
-                        label='text'
-                        control={control}
-                        success
-                    />
-                    <EmailField
-                        name='email'
-                        label='email'
-                        control={control}
-                    />
-                    <PhoneField
-                        name='phone'
-                        label='phone'
-                        control={control}
-                    />
-                    <SelectField
-                        name='select'
-                        label='select'
-                        control={control}
-                    >
-                        <MenuItem value=''>-</MenuItem>
-                        <MenuItem value='1'>Option 1</MenuItem>
-                        <MenuItem value='2'>Option 2</MenuItem>
-                    </SelectField>
-                    <CalendarField
-                        name='calendar'
-                        control={control}
-                        required={true}
-                        minDate={new Date()}
-                    />
-                    <Button onClick={logFormData} loading>FormData</Button>
-                    <Button onClick={handleSubmit(onSubmit)}>Submit</Button>
-                </FormProvider>
-            </form>
-        </div>
+            <FormProvider {...methods}>
+                <TextField
+                    name='text'
+                    label='text'
+                    control={control}
+                    success
+                />
+                <EmailField
+                    name='email'
+                    label='email'
+                    control={control}
+                />
+                <PhoneField
+                    name='phone'
+                    label='phone'
+                    control={control}
+                />
+                <SelectField
+                    name='select'
+                    label='select'
+                    control={control}
+                >
+                    <MenuItem value=''>-</MenuItem>
+                    <MenuItem value='1'>Option 1</MenuItem>
+                    <MenuItem value='2'>Option 2</MenuItem>
+                </SelectField>
+                <CalendarField
+                    name='calendar'
+                    control={control}
+                    required={true}
+                    minDate={new Date()}
+                />
+                <Button onClick={logFormData} loading>FormData</Button>
+                <Button onClick={handleSubmit(onSubmit)}>Submit</Button>
+            </FormProvider>
+        </form>
     )
 }
 
