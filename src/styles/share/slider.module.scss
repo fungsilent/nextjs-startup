@@ -1,0 +1,58 @@
+.slider {
+    .arrows {
+        display: flex;
+        gap: $basicGap;
+    }
+    .pagination {
+        display: flex;
+        gap: $smallGap;
+        .page {
+            cursor: pointer;
+        }
+    }
+    .arrows {
+        cursor: pointer;
+    }
+    &.layout-default {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: $basicGap;
+        width: 100%;
+        .slides {
+            width: 100%;
+            :global(.splide__list) {
+                .slide {
+                    display: flex;
+                    justify-content: center;
+                    background-color: $color-lightgray;
+                }
+            }
+        }
+        .pagination {
+            .page {
+                width: 20px;
+                height: 20px;
+                background-color: $color-secondary;
+                border-radius: 50%;
+                &:global(.is-active) {
+                    background-color: $color-primary;
+                }
+            }
+        }
+        .arrows {
+            display: flex;
+            gap: $basicGap;
+            .prev,
+            .next {
+                $size: 20px;
+                font-size: $size;
+                width: 20px;
+                height: 20px;
+                color: $color-primary;
+                background-color: $color-secondary;
+                padding: $smallGap;
+            }
+        }
+    }
+}

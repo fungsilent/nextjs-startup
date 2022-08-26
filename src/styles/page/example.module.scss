@@ -35,8 +35,8 @@
     margin: auto;
     padding: $sectionGap 0;
     border-bottom: 2px solid $color-primary;
-    a,
-    button {
+    & > a,
+    & > button {
         color:  $color-black;
         background-color: $color-primary;
         padding: $smallGap;
