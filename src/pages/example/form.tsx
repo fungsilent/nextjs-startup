@@ -56,6 +56,7 @@ const Form = () => {
                         name='calendar'
                         control={control}
                         required={true}
+                        minDate={new Date()}
                     />
                     <Button onClick={logFormData} loading>FormData</Button>
                     <Button onClick={handleSubmit(onSubmit)}>Submit</Button>

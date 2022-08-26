@@ -47,7 +47,8 @@ const CalendarField = <FV extends FieldValues = FieldValues>({
                                 <PickersDay
                                     {...pickersDayProps}
                                     classes={{
-                                        root: styles.date,
+                                        root: setClassName([styles.date, [pickersDayProps.disabled, styles.disabled]]),
+                                        disabled: styles.disabled,   // seems mui bug, class never set
                                         today: styles.today,
                                         selected: styles.selected,
                                     }}
