@@ -1,6 +1,7 @@
 // import NextApp from 'next/app'
 import { DefaultSeo } from 'next-seo'
 import { appStore, Provider } from '@/store'
+import Container from '@mui/material/Container'
 import Header from '@/components/part/header'
 import Footer from '@/components/part/footer'
 import GoTop from '@/components/part/goTop'
@@ -32,10 +33,13 @@ const App = ({ Component, pageProps }: NextAppProps) => {
                 ]}
             />
             <div className='app'>
-                <Header {...header}/>
-                <Component {...page}/>
-                <GoTop/>
-                <Footer/>
+                {/* Wrap with `Container` to fix Mui components styled duplicate since ssr issues come from emotion inside Mui */}
+                <Container maxWidth={false} disableGutters>
+                    <Header {...header}/>
+                    <Component {...page}/>
+                    <GoTop/>
+                    <Footer/>
+                </Container>
             </div>
         </Provider>
         
