@@ -2,10 +2,12 @@ import { createSlice } from '@reduxjs/toolkit'
 import { createApiSlice } from '@/store/utils/api'
 
 // Actions
+import { fetchTest } from './test'
 import { fetchSystem } from './system'
 import { addContact } from './contact'
 
 const { initialState, mapReducers }  = createApiSlice({
+    fetchTest,
     fetchSystem,
     addContact,
 })

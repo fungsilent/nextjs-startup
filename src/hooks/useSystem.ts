@@ -1,14 +1,13 @@
 import { useEffect } from 'react'
 import { fetchSystem } from '@/store/reducer/api/system'
-import { useDispatch, useApi, ApiReuslt } from '@/hooks/useStore'
+import { useApi } from '@/hooks/useStore'
 import { FetchSystemData } from '@/store/reducer/api/system'
 
-const useSystem = <Data = FetchSystemData>(handleData?: (data: FetchSystemData) => Data): ApiReuslt<Data> => {
-    const dispatch = useDispatch()
-    const fetchSystemState = useApi<Data>('fetchSystem', { handleData })
+const useSystem = <Data = FetchSystemData>(handleData?: (data: FetchSystemData) => Data) => {
+    const { action, ...fetchSystemState } = useApi('fetchSystem', fetchSystem, { handleData })
 
     useEffect(() => {
-        dispatch(fetchSystem())
+        action()
     }, [])
 
     return fetchSystemState

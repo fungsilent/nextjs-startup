@@ -6,11 +6,10 @@ export type FetchSystemData = {
 }
 
 // Actions
-export const fetchSystem = createApiThunk<void>(
+export const fetchSystem = createApiThunk<void, FetchSystemData>(
     'fetchSystem',
     async () => {
-        // const data = setApiData(arg, 'contact_us_data')
-        const response = await applyApi.post<void>('get_system', {})
+        const response = await applyApi.post<FetchSystemData>('get_system', {})
         return handleResponse(response)
     },
 )

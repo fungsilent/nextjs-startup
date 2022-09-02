@@ -41,23 +41,23 @@ export const applyApi: ApplyApi = {
 /**
  * createApiThunk: A helper to simplify api thunk creation
  */
-export const createApiThunk = <ApiData>(
+export const createApiThunk = <ApiData, Returned = ApiData>(
     type: string,
-    thunk: AsyncThunkPayloadCreator<ApiData, ApiData>,
+    thunk: AsyncThunkPayloadCreator<Returned, ApiData>,
     options?: {
         debug?: boolean
         status?: Exclude<ApiStatus, ApiStatus.idle>
         data?: ApiData
         delay?: number
     }
-): AsyncThunk<ApiData, ApiData, {}> => {
+): AsyncThunk<Returned, ApiData, {}> => {
     const {
         status,
         debug = false,
         data = null,
         delay = 0,
     } = options ?? {}
-    return createAsyncThunk<ApiData, ApiData, {}>(
+    return createAsyncThunk<Returned, ApiData, {}>(
         type,
         async (arg, thunkApi) => {
             // Debug
