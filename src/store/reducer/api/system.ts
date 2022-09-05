@@ -1,4 +1,4 @@
-import { createApiThunk, applyApi, setApiData, handleResponse } from '@/store/utils/api'
+import { createApiThunk, applyApi } from '@/store/utils/api'
 
 export type FetchSystemData = {
     itemA: []
@@ -10,6 +10,6 @@ export const fetchSystem = createApiThunk<void, FetchSystemData>(
     'fetchSystem',
     async () => {
         const response = await applyApi.post<FetchSystemData>('get_system', {})
-        return handleResponse(response)
+        return applyApi.handleResponse(response)
     },
 )

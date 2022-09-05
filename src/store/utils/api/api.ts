@@ -1,42 +1,7 @@
-import getConfig from 'next/config'
 import { reduce, forEach } from 'lodash'
-import axios, { AxiosResponse } from 'axios'
-import { serialize } from 'object-to-formdata'
 import { createAsyncThunk, ActionReducerMapBuilder, AsyncThunk, AsyncThunkPayloadCreator } from '@reduxjs/toolkit'
-import { Api, ApiState, ApiStatus, ApiResponseStatus, ResponseData } from '@/types/api'
+import { Api, ApiState, ApiStatus } from '@/types/api'
 import Promise from 'bluebird'
-
-const { apiBaseUrl } = getConfig().publicRuntimeConfig
-
-/**
- * setApiData: A helper to set common api data
- */
-export const setApiData = <Data = object>(data: Data, type: string): Data => {
-    return {
-        ...data,
-        data_type: type,
-        status: 'active',
-        data_status: 'active',
-    }
-}
-
-/**
- * applyApi: An axios helper to set data and apply
- */
-type ApplyApi = {
-    serialize: (endpoint: string, data: {}) => FormData
-    post: <ApiData>(endpoint: string, data: {}, config?: {}) => Promise<AxiosResponse<ResponseData<ApiData>>>
-}
-export const applyApi: ApplyApi = {
-    serialize: (endpoint: string, data = {}): FormData => (serialize({
-        [endpoint]: JSON.stringify(data)
-    })),
-    post: async (endpoint: string, data, config?) => {
-        return await axios.post(apiBaseUrl, applyApi.serialize(endpoint, data), {
-            ...config,
-        })
-    },
-}
 
 /**
  * createApiThunk: A helper to simplify api thunk creation
@@ -82,24 +47,6 @@ export const createApiThunk = <ApiData, Returned = ApiData>(
             }
         },
     )
-}
-
-/**
- * handleResponse: A helper to simplify response handling
- */
-export const handleResponse = <ApiData>(response: AxiosResponse<ResponseData<ApiData>>) => {
-    switch(response.data.result) {
-        case ApiResponseStatus.success: {
-            return response.data.data
-        }
-        case ApiResponseStatus.fail: {
-            console.log('Request Error', response.data.feedback)
-            throw new Error('Request Failed')
-        }
-        default: {
-            throw new Error('Unknown Failed')
-        }
-    }
 }
 
 /**
