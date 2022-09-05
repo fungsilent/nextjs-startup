@@ -13,6 +13,7 @@ import '@/styles/globals.scss'
 const App = ({ Component, pageProps }: NextAppProps) => {
     const { header, page } = pageProps
     const config = useConfig()
+    console.log('ENV:', process.env.NODE_ENV)
     return (
         <Provider store={appStore}>
             <DefaultSeo

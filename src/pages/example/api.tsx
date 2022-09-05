@@ -1,5 +1,6 @@
 import moment from 'moment'
-import { useUpdate } from 'react-use'
+import { useEffect } from 'react'
+import { useFirstMountState, useUpdate } from 'react-use'
 import { useDispatch, useSelector } from '@/hooks/useStore'
 import useSystem from '@/hooks/useSystem'
 import { fetchTest } from '@/store/reducer/api/test'
@@ -9,6 +10,7 @@ import Button from '@/components/share/button'
 import styles from '@/styles/page/example.module.scss'
 
 const Api = () => {
+    const isMount = useFirstMountState()
     const doReRender = useUpdate()
     const dispatch = useDispatch()
     const appState = useSelector(state => state)
@@ -31,6 +33,10 @@ const Api = () => {
     console.log('fetchSystem', fetchSystemState)
     console.groupEnd()
 
+    useEffect(() => {
+        doReRender()
+    }, [])
+
     const doFetchTest = () => {
         // dispatch(fetchTest({ key: 'HK' }))
         fetchTestState.action({ key: 'HK' })
@@ -39,7 +45,7 @@ const Api = () => {
     return (
         <div className={styles.layout}>
             <h2>Api</h2>
-            <Button onClick={doReRender}>Render - {moment().format()}</Button>
+            <Button onClick={doReRender}>Render - {isMount ? '' : moment().format()}</Button>
             <br/>
             <h3>fetchTest</h3>
             <Display v={{ isLoading: fetchTestState.isLoading }}/>
