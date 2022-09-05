@@ -4,7 +4,7 @@ Website frontend for [Power Moto](http://powermoto.innpressionhost.com) develope
  
 ## Dependencies
 
-* Next.js v12.22.0
+* Next.js v12.2.5
 * React.js v17.0.2
 * Node.js v16.16.0
 
