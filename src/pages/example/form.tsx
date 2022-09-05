@@ -3,6 +3,8 @@ import { TextField, EmailField, PhoneField, SelectField, MenuItem, CalendarField
 import Display from '@/components/page/example/display'
 import Button from '@/components/share/button'
 import styles from '@/styles/page/example.module.scss'
+// type
+import { Page } from '@/types/app'
 
 type FormData = {
     text: string
@@ -12,7 +14,7 @@ type FormData = {
     calendar: Date
 }
 
-const Form = () => {
+const Form: Page = () => {
     const  methods = useForm<FormData>({ mode: 'all' })
     const  { watch, control, handleSubmit } = methods
     

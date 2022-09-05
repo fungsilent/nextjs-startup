@@ -3,8 +3,10 @@ import { addCounter } from '@/store/reducer/normal'
 import Display from '@/components/page/example/display'
 import Button from '@/components/share/button'
 import styles from '@/styles/page/example.module.scss'
+// type
+import { Page } from '@/types/app'
 
-const Store = () => {
+const Store: Page = () => {
     const dispatch = useDispatch()
     const counterA = useSelector(state => state.normal.counter)
     const add = () => dispatch(addCounter())

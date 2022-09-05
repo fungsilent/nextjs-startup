@@ -1,20 +1,22 @@
-import { AppProps as _NextAppProps } from 'next/app'
+import { AppProps as NextAppProps } from 'next/app'
+import { NextPage } from 'next'
 
-export type NextAppProps = Omit<_NextAppProps<PageProps>, 'pageProps'> & {
-    pageProps: AppProps
-}
+export type App = (
+    props: UnionOverride<NextAppProps<PageProps>, {
+        pageProps: AppProps
+    }>
+) => JSX.Element
 
-export type AppProps = {
+export type AppProps<ExtraPageProps = unknown> = {
     header?: HeaderProps
-    page?: PageProps
+    page?: PageProps & ExtraPageProps
 }
 
 export type HeaderProps = {
     className?: string
 }
 
-/* TODO: how to extend custom props from pages itelff */
-// Page component props
+export type Page<ExtraPageProps = {}> = NextPage<PageProps & ExtraPageProps>
 export type PageProps = {
-    id?: number
+    readonly env?: string;
 }

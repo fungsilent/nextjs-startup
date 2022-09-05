@@ -3,8 +3,16 @@ import _ from 'lodash'
 import axios from 'axios'
 import Display from '@/components/page/example/display'
 import styles from '@/styles/page/example.module.scss'
+// type
+import { Page } from '@/types/app'
 
-const SEO = ({ response, title, description }) => {
+type Props = {
+    response: any
+    title: string
+    description: string
+}
+
+const SEO: Page<Props> = ({ response, title, description }) => {
     console.log(response)
     return (
         <div className={styles.layout}>

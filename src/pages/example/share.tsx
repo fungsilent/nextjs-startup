@@ -4,8 +4,10 @@ import { Slider, Slide } from '@/components/share/slider'
 import Display from '@/components/page/example/display'
 import styles from '@/styles/page/example.module.scss'
 import '@splidejs/react-splide/css/core'
+// type
+import { Page } from '@/types/app'
 
-const Share = () => {
+const Share: Page = () => {
     
     return (
         <div className={styles.layout}>

@@ -1,4 +1,5 @@
 import _ from 'lodash'
+import { NextPage } from 'next'
 import Link from '@/components/share/link'
 import useResponsive from '@/hooks/useResponsive'
 import styles from '@/styles/page/example.module.scss'
@@ -13,7 +14,7 @@ const routes = [
     { name: 'Share', link: '/example/share'}
 ]
 
-const Demo = () => {
+const Demo: NextPage = () => {
     const responsive = useResponsive()
     console.log('> responsive', responsive)
     return (

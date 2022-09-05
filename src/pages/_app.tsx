@@ -6,11 +6,11 @@ import Header from '@/components/part/header'
 import Footer from '@/components/part/footer'
 import GoTop from '@/components/part/goTop'
 import useConfig from '@/hooks/useConfig'
-import { NextAppProps } from '@/types/app'
+import { App as NextApp } from '@/types/app'
 import '@fortawesome/fontawesome-svg-core/styles.css'
 import '@/styles/globals.scss'
 
-const App = ({ Component, pageProps }: NextAppProps) => {
+const App: NextApp = ({ Component, pageProps }) => {
     const { header, page } = pageProps
     const config = useConfig()
     console.log('ENV:', process.env.NODE_ENV)
@@ -37,7 +37,7 @@ const App = ({ Component, pageProps }: NextAppProps) => {
                 {/* Wrap with `Container` to fix Mui components styled duplicate since ssr issues come from emotion inside Mui */}
                 <Container maxWidth={false} disableGutters>
                     <Header {...header}/>
-                    <Component {...page}/>
+                    <Component {...page} env={process.env.NODE_ENV}/>
                     <GoTop/>
                     <Footer/>
                 </Container>

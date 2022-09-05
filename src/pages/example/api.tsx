@@ -8,8 +8,10 @@ import { useApiAction, useApi } from '@/hooks/useStore'
 import Display from '@/components/page/example/display'
 import Button from '@/components/share/button'
 import styles from '@/styles/page/example.module.scss'
+// type
+import { Page } from '@/types/app'
 
-const Api = () => {
+const Api: Page = () => {
     const isMount = useFirstMountState()
     const doReRender = useUpdate()
     const dispatch = useDispatch()
