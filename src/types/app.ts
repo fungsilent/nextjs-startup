@@ -9,7 +9,7 @@ export type App = (
 
 export type AppProps<ExtraPageProps = unknown> = {
     header?: HeaderProps
-    page?: PageProps & ExtraPageProps
+    page?: Partial<PageProps> & ExtraPageProps
 }
 
 export type HeaderProps = {
@@ -18,5 +18,5 @@ export type HeaderProps = {
 
 export type Page<ExtraPageProps = {}> = NextPage<PageProps & ExtraPageProps>
 export type PageProps = {
-    readonly env?: string;
+    readonly env: string
 }

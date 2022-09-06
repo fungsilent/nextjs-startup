@@ -16,7 +16,7 @@ const Config: Page = ({ env }) => {
     )
 }
 
-export const getStaticProps: GetStaticProps<AppProps> = async context => {
+export const getStaticProps: GetStaticProps<AppProps> = async () => {
     return {
         props: {
             header: {
