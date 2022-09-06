@@ -3,13 +3,13 @@ import { setClassName } from '@/utils'
 import styles from '@/styles/share/icon/status.module.scss'
 
 type LoaderIconProps = {
-    className?: {
+    classes?: {
         root?: string,
     }
 }
 
 const LoaderIcon = ({
-    className: {
+    classes: {
         root: rootClassName,
     } = {},
 }: LoaderIconProps) => (

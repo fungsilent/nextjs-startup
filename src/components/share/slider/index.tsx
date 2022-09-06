@@ -1,15 +1,19 @@
-
-import _map from 'lodash/map'
-import { ReactNode } from 'react'
 import { Splide, SplideTrack, SplideSlide, SplideProps } from '@splidejs/react-splide'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faAngleLeft, faAngleRight } from '@fortawesome/free-solid-svg-icons'
 import { setClassName } from '@/utils'
 import styles from '@/styles/share/slider.module.scss'
 
-type SlideProps = {
-    children?: ReactNode
+type SlideProps = Children & {
     className?: string
+}
+type SliderProps = Omit<SplideProps, 'className'> & {
+    layout?: 'default'
+    classes?: {
+        root?: string
+        slides?: string
+        arrows?: string
+    }
 }
 
 const Slide = ({
@@ -21,20 +25,11 @@ const Slide = ({
     </SplideSlide>
 )
 
-type SliderProps = Omit<SplideProps, 'className'> & {
-    layout?: 'default'
-    className?: {
-        root?: string
-        slides?: string
-        arrows?: string
-    }
-}
-
 const Slider = ({
     children,
     options = {},
     layout = 'default',
-    className: {
+    classes: {
         root: rootClassName,
         slides: slidesClassName,
         arrows: arrowsClassName,

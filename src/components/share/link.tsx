@@ -1,17 +1,21 @@
-import { ReactNode } from 'react'
-import NextLink, { LinkProps } from 'next/link'
+import NextLink, { LinkProps as NextLinkProps } from 'next/link'
 
-type Props = LinkProps & {
-    className?: string,
-    children?: ReactNode
+type LinkProps = NextLinkProps & Children & {
+    className?: string
+    classes?: {
+        root?: string
+    }
 }
 
 const Link = ({
-    className = '',
+    className,
+    classes: {
+        root: rootClassName,
+    } = {},
     children,
     href, as, replace, scroll, shallow, passHref, prefetch, locale, legacyBehavior, onMouseEnter, onClick,
     ...rest
-}: Props) => {
+}: LinkProps) => {
     return (
         <NextLink
             // No handling props
@@ -27,7 +31,7 @@ const Link = ({
             onMouseEnter={onMouseEnter}
             onClick={onClick}
         >
-            <a className={className} {...rest}>
+            <a className={rootClassName ?? className} {...rest}>
                 {children}
             </a>
         </NextLink>

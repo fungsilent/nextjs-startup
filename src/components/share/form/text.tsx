@@ -15,7 +15,6 @@ export type TextFieldProps<FV extends FieldValues = FieldValues> = UseController
     pattern?: RegExp
     layout?: 'default' | 'rounded'
 }
-
 type StatusProps = {
     loading?: boolean
     success?: boolean

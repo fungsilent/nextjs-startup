@@ -6,11 +6,10 @@ import { Controller, FieldValues, UseControllerProps } from 'react-hook-form'
 import { setClassName } from '@/utils'
 import styles from '@/styles/share/form/select.module.scss'
 
-type SelectFieldProps<FV extends FieldValues = FieldValues> = UseControllerProps<FV> & SelectProps & {
+type SelectFieldProps<FV extends FieldValues = FieldValues> = UseControllerProps<FV> & SelectProps & Children & {
     name: string
     label?: string
     required?: boolean
-    children?: ReactNode
     layout?: 'default'
 }
 

@@ -1,4 +1,4 @@
-import { ReactNode, MouseEventHandler } from 'react'
+import { MouseEventHandler } from 'react'
 import LoaderIcon from '@/components/share/icon/loader'
 import SuccessIcon from '@/components/share/icon/success'
 import ErrorIcon from '@/components/share/icon/error'
@@ -6,36 +6,34 @@ import Link from '@/components/share/link'
 import { setClassName } from '@/utils'
 import styles from '@/styles/share/button/default.module.scss'
 
-/* TODO: use HTMLElement type */
-export type ButtonProps = {
+export type ButtonProps = Children & {
     link?: string
     target?: string
-    children?: ReactNode
     loading?: boolean
     success?: boolean
     error?: boolean
     onClick?: MouseEventHandler
-    className?: {
+    classes?: {
         root?: string
         loader?: string
         success?: string
         error?: string
     }
-    layout?: 'default' | 'hollow' | 'solid'
+    layout?: 'default'
 }
 
 const DefaultButton = ({
     link,
     children,
+    onClick,
     loading = false,
     success = false,
     error = false,
-    onClick,
-    className: {
-        root: rootClassName = '',
-        loader: loaderClassName = '',
-        success: successClassName = '',
-        error: errorClassName = '',
+    classes: {
+        root: rootClassName,
+        loader: loaderClassName,
+        success: successClassName,
+        error: errorClassName,
     } = {},
     layout = 'default',
     ...rest
@@ -52,9 +50,9 @@ const DefaultButton = ({
         <>
             {children}
             <div className={styles.status}>
-                {loading ? <LoaderIcon className={{ root: loaderClassName }}/> : null}
-                {success ? <SuccessIcon className={{ root: successClassName }}/> : null}
-                {error ? <ErrorIcon className={{ root: errorClassName }}/> : null}
+                {loading ? <LoaderIcon classes={{ root: loaderClassName }}/> : null}
+                {success ? <SuccessIcon classes={{ root: successClassName }}/> : null}
+                {error ? <ErrorIcon classes={{ root: errorClassName }}/> : null}
             </div>
         </>
     )

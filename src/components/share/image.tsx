@@ -3,15 +3,14 @@ import { setClassName } from '@/utils'
 import styles from '@/styles/share/image.module.scss'
 
 export type ImageProps = Omit<NextImageProps, 'className'> & {
-    imageClassName?: string
-    className?: {
+    classes?: {
         root?: string
         image?: string
     }
 }
 
 const Image = ({
-    className: {
+    classes: {
         root: rootClassName,
         image: imageClassName,
     } = {},

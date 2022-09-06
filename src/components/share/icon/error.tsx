@@ -4,13 +4,13 @@ import { setClassName } from '@/utils'
 import styles from '@/styles/share/icon/status.module.scss'
 
 type ErrorIconProps = {
-    className?: {
+    classes?: {
         root?: string,
     }
 }
 
 const ErrorIcon = ({
-    className: {
+    classes: {
         root: rootClassName,
     } = {},
 }: ErrorIconProps) => (

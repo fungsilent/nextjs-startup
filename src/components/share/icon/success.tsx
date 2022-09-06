@@ -4,13 +4,13 @@ import { setClassName } from '@/utils'
 import styles from '@/styles/share/icon/status.module.scss'
 
 type SuccessIconProps = {
-    className?: {
+    classes?: {
         root?: string,
     }
 }
 
 const SuccessIcon = ({
-    className: {
+    classes: {
         root: rootClassName,
     } = {},
 }: SuccessIconProps) => (

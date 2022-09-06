@@ -1,4 +1,3 @@
-import { ReactNode } from 'react'
 import MuiAccordion, { AccordionProps as MuiAccordionProps } from '@mui/material/Accordion'
 import MuiAccordionSummary from '@mui/material/AccordionSummary'
 import MuiAccordionDetails from '@mui/material/AccordionDetails'
@@ -7,11 +6,10 @@ import { faAngleDown } from '@fortawesome/free-solid-svg-icons'
 import { setClassName } from '@/utils'
 import styles from '@/styles/share/accordion/default.module.scss'
 
-export type AccordionProps = Omit<MuiAccordionProps, 'className'> & {
+export type AccordionProps = Omit<MuiAccordionProps, 'classes'> & {
     header?: ReactNode
     icon?: ReactNode
-    children?: ReactNode
-    className?: {
+    classes?: {
         root?: string
         header?: string
         content?: string
@@ -24,14 +22,13 @@ const Accordion = ({
     icon,
     children,
     layout = 'default',
-    className: {
+    classes: {
         root: rootClassName,
         header: headerClassName,
         content: contentClassName,
     } = {},
     ...rest
 }: AccordionProps) => {
-    /* TODO: use Icon */
     const renderIcon = icon ?? (
         <i className={styles.icon}>
             <FontAwesomeIcon icon={faAngleDown} fontSize={20}/>

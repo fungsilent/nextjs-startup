@@ -1,12 +1,12 @@
-import _split from 'lodash/split'
+import { split } from 'lodash'
 import NextImage, { ImageProps } from '@/components/share/image'
 import { setClassName } from '@/utils'
 import styles from '@/styles/share/icon/image.module.scss'
 
-export type IconProps = Omit<ImageProps, 'className'> & {
+export type IconProps = Omit<ImageProps, 'classes'> & {
     src?: string
     size?: number
-    className?: {
+    classes?: {
         root?: string
         icon?: string
         image?: string
@@ -16,20 +16,20 @@ export type IconProps = Omit<ImageProps, 'className'> & {
 const Icon = ({
     src,
     size = 20,
-    className: {
+    classes: {
         root: rootClassName,
         icon: iconClassName,
         image: imageClassName,
     } = {},
     ...rest
 }: IconProps) => {
-    const isFullPath = _split(src, '/').length > 1
+    const isFullPath = split(src, '/').length > 1
     return (
         <i className={setClassName([styles.icon, rootClassName])} {...rest}>
             <NextImage
                 {...rest}
                 src={isFullPath ? src : `images/icon/${src}`}
-                className={{
+                classes={{
                     root: iconClassName,
                     image: imageClassName,
                 }}

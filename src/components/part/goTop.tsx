@@ -5,7 +5,7 @@ const GoTop = () => {
     const go = () => window.scrollTo(0, 0)
     return (
         <Icon
-            className={{
+            classes={{
                 root: styles.goTop,
             }}
             src='/images/icon/go_top.svg'
