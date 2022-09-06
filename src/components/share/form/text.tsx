@@ -1,4 +1,5 @@
-import _find from 'lodash/find'
+import { find } from 'lodash'
+import { ElementType } from 'react'
 import MuiOutlinedInput, { OutlinedInputProps } from '@mui/material/OutlinedInput'
 import { Controller, FieldValues, UseControllerProps } from 'react-hook-form'
 import LoaderIcon from '@/components/share/icon/loader'
@@ -7,7 +8,7 @@ import ErrorIcon from '@/components/share/icon/error'
 import { setClassName } from '@/utils'
 import styles from '@/styles/share/form/text.module.scss'
 
-export type TextFieldProps<FV> = UseControllerProps<FV> & OutlinedInputProps & StatusProps & {
+export type TextFieldProps<FV extends FieldValues = FieldValues> = UseControllerProps<FV> & OutlinedInputProps & StatusProps & {
     label?: string
     placeholder?: string
     required?: boolean
@@ -26,11 +27,11 @@ const Status = ({
     success,
     error,
 }: StatusProps) => {
-    const hasStatus = _find([
+    const hasStatus = find([
         [error, ErrorIcon],
         [success, SuccessIcon],
         [loading, LoaderIcon],
-    ], v => v[0])
+    ], v => v[0]) as [boolean, ElementType]
     if (!hasStatus) return null
     const Component = hasStatus[1]
     return (
@@ -50,7 +51,7 @@ const TextField = <FV extends FieldValues = FieldValues>({
     label = '',
     placeholder = '',
     required = false,
-    pattern = null,
+    pattern = new RegExp(''),
     layout = 'default',
     ...rest
 }: TextFieldProps<FV>) => (

@@ -1,7 +1,13 @@
 import _ from 'lodash'
 import styles from '@/styles/page/example.module.scss'
 
-const Display = ({ v }) => {
+type Props = {
+    v: {
+        [key: string]: string | number | boolean | null | undefined
+    }
+}
+
+const Display = ({ v }: Props) => {
     const key = _.chain(v).keys().head().value()
     let value = v[key]
     if (_.isBoolean(value)) value = (new Boolean(value)).toString()

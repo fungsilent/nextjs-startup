@@ -6,7 +6,7 @@ import { Controller, FieldValues, UseControllerProps } from 'react-hook-form'
 import { setClassName } from '@/utils'
 import styles from '@/styles/share/form/calendar.module.scss'
 
-type CalendarFieldProps<FV> = UseControllerProps<FV> & Omit<CalendarPickerProps<Date>, 'date' | 'onChange'> & {
+type CalendarFieldProps<FV extends FieldValues = FieldValues> = UseControllerProps<FV> & Omit<CalendarPickerProps<Date>, 'date' | 'onChange'> & {
     label?: string
     required?: boolean
     layout?: 'default'
@@ -47,7 +47,7 @@ const CalendarField = <FV extends FieldValues = FieldValues>({
                                 <PickersDay
                                     {...pickersDayProps}
                                     classes={{
-                                        root: setClassName([styles.date, [pickersDayProps.disabled, styles.disabled]]),
+                                        root: setClassName([styles.date, [pickersDayProps.disabled as boolean, styles.disabled]]),
                                         disabled: styles.disabled,   // seems mui bug, class never set
                                         today: styles.today,
                                         selected: styles.selected,

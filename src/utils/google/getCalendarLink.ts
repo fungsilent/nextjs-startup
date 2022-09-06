@@ -13,7 +13,7 @@ const getGoogleCalendarLink = (data: CalendarData): string => {
     const { date, time, ...rest } = data
     let params = {
         action: 'TEMPLATE',
-        dates: null,
+        dates: '',
         ctz: 'Asia/Hong_Kong',
         ...rest,
     }
