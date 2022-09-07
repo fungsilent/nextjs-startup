@@ -11,7 +11,8 @@ const routes = [
     { name: 'Form', link: '/example/form' },
     { name: 'Store', link: '/example/store' },
     { name: 'Api', link: '/example/api' },
-    { name: 'Share', link: '/example/share'}
+    { name: 'Share', link: '/example/share'},
+    { name: 'Util', link: '/example/util'},
 ]
 
 const Demo: NextPage = () => {
