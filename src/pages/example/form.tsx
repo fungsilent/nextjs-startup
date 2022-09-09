@@ -61,6 +61,15 @@ const Form: Page = () => {
                     required={true}
                     minDate={new Date()}
                 />
+                <div>
+                    <Button loading>Loading</Button>
+                </div>
+                <div>
+                    <Button success>Success</Button>
+                </div>
+                <div>
+                    <Button error>Error</Button>
+                </div>
                 <Button onClick={logFormData} loading>FormData</Button>
                 <Button onClick={handleSubmit(onSubmit)}>Submit</Button>
             </FormProvider>
