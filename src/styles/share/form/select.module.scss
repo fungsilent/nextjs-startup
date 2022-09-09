@@ -39,3 +39,27 @@
         }
     }
 }
+.menu {
+    &.layout-default {
+        .paper {
+            box-shadow: 0 0 0 2px $color-gray;
+        }
+        .list {
+            display: flex;
+            flex-direction: column;
+            gap: $smallGap / 4 * 3;
+            padding: $smallGap / 4 * 3 0 ;
+        }
+        .item {
+            color: $color-primary;
+            border-radius: 4px;
+            margin: 0 $smallGap;
+            &:hover:not(.selected) {
+                background-color: $color-lightgray;
+            }
+        }
+        .selected {
+            background-color: $color-secondary;
+        }
+    }
+}

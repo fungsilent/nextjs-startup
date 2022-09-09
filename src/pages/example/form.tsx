@@ -3,6 +3,7 @@ import { TextField, EmailField, PhoneField, SelectField, MenuItem, CalendarField
 import Display from '@/components/page/example/display'
 import Button from '@/components/share/button'
 import styles from '@/styles/page/example.module.scss'
+import _ from 'lodash'
 // type
 import { Page } from '@/types/app'
 
@@ -10,7 +11,7 @@ type FormData = {
     text: string
     email: string
     phone: string
-    select: string
+    select: number
     calendar: Date
 }
 
@@ -51,10 +52,20 @@ const Form: Page = () => {
                     label='select'
                     control={control}
                 >
-                    <MenuItem value=''>-</MenuItem>
-                    <MenuItem value='1'>Option 1</MenuItem>
-                    <MenuItem value='2'>Option 2</MenuItem>
+                    <MenuItem value={0}>-</MenuItem>
+                    <MenuItem value={1}>Option 1</MenuItem>
+                    <MenuItem value={2}>Option 2</MenuItem>
+                    <MenuItem value={3}>Option 3</MenuItem>
                 </SelectField>
+                <SelectField
+                    name='select'
+                    label='select'
+                    control={control}
+                    list={_.map(Array.from({ length: 4 }), (i, key) => ({
+                        value: key + 1,
+                        content: `Option ${key + 1}`
+                    }))}
+                />
                 <CalendarField
                     name='calendar'
                     control={control}
