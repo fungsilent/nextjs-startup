@@ -1,43 +1,15 @@
-import { find } from 'lodash'
-import { ElementType } from 'react'
 import MuiOutlinedInput, { OutlinedInputProps } from '@mui/material/OutlinedInput'
 import { Controller, FieldValues, UseControllerProps } from 'react-hook-form'
-import LoaderIcon from '@/components/share/icon/loader'
-import SuccessIcon from '@/components/share/icon/success'
-import ErrorIcon from '@/components/share/icon/error'
+import StatusIcon, { StatusIconProps } from '@/components/share/icon/status'
 import { setClassName } from '@/utils'
 import styles from '@/styles/share/form/text.module.scss'
 
-export type TextFieldProps<FV extends FieldValues = FieldValues> = UseControllerProps<FV> & OutlinedInputProps & StatusProps & {
+export type TextFieldProps<FV extends FieldValues = FieldValues> = UseControllerProps<FV> & OutlinedInputProps & NoClassName<StatusIconProps> & {
     label?: string
     placeholder?: string
     required?: boolean
     pattern?: RegExp
     layout?: 'default' | 'rounded'
-}
-type StatusProps = {
-    loading?: boolean
-    success?: boolean
-    error?: boolean
-}
-
-const Status = ({
-    loading,
-    success,
-    error,
-}: StatusProps) => {
-    const hasStatus = find([
-        [error, ErrorIcon],
-        [success, SuccessIcon],
-        [loading, LoaderIcon],
-    ], v => v[0]) as [boolean, ElementType]
-    if (!hasStatus) return null
-    const Component = hasStatus[1]
-    return (
-        <div className={styles.status}>
-            <Component className={{ root: styles.icon }}/>
-        </div>
-    )
 }
 
 /* TODO: how to control form error and status error icon? */
@@ -87,10 +59,14 @@ const TextField = <FV extends FieldValues = FieldValues>({
                         input: styles.input,
                     }}
                     endAdornment={(
-                        <Status
+                        <StatusIcon
                             loading={loading}
                             success={success}
                             error={error}
+                            classes={{
+                                root: styles.status,
+                                icon: styles.icon,
+                            }}
                         />
                     )}
                 />

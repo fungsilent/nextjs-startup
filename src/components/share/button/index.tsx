@@ -1,12 +1,10 @@
 import { MouseEventHandler } from 'react'
-import LoaderIcon from '@/components/share/icon/loader'
-import SuccessIcon from '@/components/share/icon/success'
-import ErrorIcon from '@/components/share/icon/error'
+import StatusIcon, { StatusIconProps } from '@/components/share/icon/status'
 import Link from '@/components/share/link'
 import { setClassName } from '@/utils'
 import styles from '@/styles/share/button/default.module.scss'
 
-export type ButtonProps = Children & {
+export type ButtonProps = Children & NoClassName<StatusIconProps> & {
     link?: string
     target?: string
     loading?: boolean
@@ -14,10 +12,10 @@ export type ButtonProps = Children & {
     error?: boolean
     onClick?: MouseEventHandler
     classes?: {
-        root?: string
-        loader?: string
-        success?: string
-        error?: string
+        root?: ClassName
+        loader?: ClassName
+        success?: ClassName
+        error?: ClassName
     }
     layout?: 'default'
 }
@@ -49,11 +47,18 @@ const DefaultButton = ({
     const content = (
         <>
             {children}
-            <div className={styles.status}>
-                {loading ? <LoaderIcon classes={{ root: loaderClassName }}/> : null}
-                {success ? <SuccessIcon classes={{ root: successClassName }}/> : null}
-                {error ? <ErrorIcon classes={{ root: errorClassName }}/> : null}
-            </div>
+            <StatusIcon
+                loading={loading}
+                success={success}
+                error={error}
+                classes={{
+                    root: styles.status,
+                    icon: styles.icon,
+                    loader: loaderClassName,
+                    success: successClassName,
+                    error: errorClassName,
+                }}
+            />
         </>
     )
     if (link) {
