@@ -3,7 +3,7 @@ import React from 'react'
 export declare global {
     // React
     type ReactNode = React.ReactNode
-    type Children = { children?: ReactNode | undefined }
+    type Children = { children?: ReactNode }
 
     // Custom
     type ClassName = string | undefined

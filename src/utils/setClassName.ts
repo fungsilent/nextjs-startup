@@ -1,7 +1,6 @@
 import { map, isArray } from 'lodash'
 
-
-const setClassName = <Name extends string | undefined>(classNames: (Name | [boolean, Name])[]): string => {
+const setClassName = (classNames: (ClassName | [boolean, ClassName])[]): string => {
     return map(classNames, name => {
         if (isArray(name)) {
             return !!name[0] ? name[1] : ''

@@ -1,9 +1,9 @@
 import NextLink, { LinkProps as NextLinkProps } from 'next/link'
 
 type LinkProps = NextLinkProps & Children & {
-    className?: string
+    className?: ClassName
     classes?: {
-        root?: string
+        root?: ClassName
     }
 }
 

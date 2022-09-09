@@ -7,12 +7,12 @@ import styles from '@/styles/share/slider.module.scss'
 type SlideProps = Children & {
     className?: string
 }
-type SliderProps = Omit<SplideProps, 'className'> & {
+type SliderProps = NoClassName<SplideProps> & {
     layout?: 'default'
     classes?: {
-        root?: string
-        slides?: string
-        arrows?: string
+        root?: ClassName
+        slides?: ClassName
+        arrows?: ClassName
     }
 }
 

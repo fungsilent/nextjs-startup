@@ -6,13 +6,13 @@ import { faAngleDown } from '@fortawesome/free-solid-svg-icons'
 import { setClassName } from '@/utils'
 import styles from '@/styles/share/accordion/default.module.scss'
 
-export type AccordionProps = Omit<MuiAccordionProps, 'classes'> & {
+export type AccordionProps = NoClassName<MuiAccordionProps> & {
     header?: ReactNode
     icon?: ReactNode
     classes?: {
-        root?: string
-        header?: string
-        content?: string
+        root?: ClassName
+        header?: ClassName
+        content?: ClassName
     },
     layout?: 'default'
 }

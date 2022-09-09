@@ -3,13 +3,13 @@ import NextImage, { ImageProps } from '@/components/share/image'
 import { setClassName } from '@/utils'
 import styles from '@/styles/share/icon/image.module.scss'
 
-export type IconProps = Omit<ImageProps, 'classes'> & {
+export type IconProps = NoClassName<ImageProps> & {
     src?: string
     size?: number
     classes?: {
-        root?: string
-        icon?: string
-        image?: string
+        root?: ClassName
+        icon?: ClassName
+        image?: ClassName
     }
 }
 

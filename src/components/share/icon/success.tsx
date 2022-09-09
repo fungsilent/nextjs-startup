@@ -5,7 +5,7 @@ import styles from '@/styles/share/icon/status.module.scss'
 
 type SuccessIconProps = {
     classes?: {
-        root?: string,
+        root?: ClassName
     }
 }
 

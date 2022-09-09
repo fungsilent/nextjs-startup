@@ -4,8 +4,8 @@ import styles from '@/styles/share/image.module.scss'
 
 export type ImageProps = Omit<NextImageProps, 'className'> & {
     classes?: {
-        root?: string
-        image?: string
+        root?: ClassName
+        image?: ClassName
     }
 }
 
