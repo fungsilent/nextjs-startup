@@ -65,8 +65,9 @@ const SelectField = <FV extends FieldValues = FieldValues>({
 }: SelectFieldProps<FV>) => {
     let items: ReactNode = children
     if (list) {
-        items = map(list, item => (
+        items = map(list, (item, key) => (
             <MenuItem
+                key={key}
                 {...item.props}
                 value={item.value}
             >
