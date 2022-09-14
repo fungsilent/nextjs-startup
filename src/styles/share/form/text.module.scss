@@ -5,15 +5,15 @@
     }
     .root {
         padding: 0;
-        .status {
-            padding: 0 $smallGap;
-        }
     }
     &.layout-default {
         .root {
+            display: flex;
+            gap: $basicGap;
             color: $color-primary;
             background-color: $color-white;
             border-radius: 0;
+            padding: $smallGap * 1.5 $basicGap;
             &:hover {
                 .outline {
                     border-color: $color-primary;
@@ -39,7 +39,7 @@
                 transition: border .1s ease-in;
             }
             .input {
-                padding: $smallGap * 1.5 $basicGap;
+                padding: 0;
             }
         }
     }
