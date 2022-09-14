@@ -2,6 +2,7 @@ const path = require('path')
 
 const nextConfig = {
     // Base Config
+    reactStrictMode: true,
     sassOptions: {
         includePaths: [path.join(__dirname, 'src/styles')],
         additionalData: `
