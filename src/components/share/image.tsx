@@ -2,7 +2,7 @@ import NextImage, { ImageProps as NextImageProps } from 'next/image'
 import { setClassName } from '@/utils'
 import styles from '@/styles/share/image.module.scss'
 
-export type ImageProps = Omit<NextImageProps, 'className'> & {
+export type ImageProps = NoClassName<NextImageProps> & {
     classes?: {
         root?: ClassName
         image?: ClassName
