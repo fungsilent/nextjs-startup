@@ -1,4 +1,5 @@
 // import NextApp from 'next/app'
+import { useEffect } from 'react'
 import { DefaultSeo } from 'next-seo'
 import { appStore, Provider } from '@/store'
 import Container from '@mui/material/Container'
@@ -6,14 +7,24 @@ import Header from '@/components/part/header'
 import Footer from '@/components/part/footer'
 import GoTop from '@/components/part/goTop'
 import useConfig from '@/hooks/useConfig'
+import { useDispatch } from '@/hooks/useStore'
+import { toCsr } from '@/store/reducer/app'
 import { App as NextApp } from '@/types/app'
 import '@fortawesome/fontawesome-svg-core/styles.css'
 import '@/styles/globals.scss'
 
+const AppControl = () => {
+    const dispatch = useDispatch()
+    useEffect(() => {
+        dispatch(toCsr())
+    }, [])
+    return null
+}
+
 const App: NextApp = ({ Component, pageProps }) => {
-    const { header, page } = pageProps
-    const config = useConfig()
     console.log('ENV:', process.env.NODE_ENV)
+    const { header = {}, page = {} } = pageProps
+    const config = useConfig()
     return (
         <Provider store={appStore}>
             <DefaultSeo
@@ -34,6 +45,7 @@ const App: NextApp = ({ Component, pageProps }) => {
                 ]}
             />
             <div className='app'>
+                <AppControl/>
                 {/* Wrap with `Container` to fix Mui components styled duplicate since ssr issues come from emotion inside Mui */}
                 <Container maxWidth={false} disableGutters>
                     <Header {...header}/>

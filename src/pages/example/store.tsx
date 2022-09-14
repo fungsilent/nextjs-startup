@@ -11,8 +11,6 @@ const Store: Page = () => {
     const counterA = useSelector(state => state.normal.counter)
     const add = () => dispatch(addCounter())
 
-    console.log('> counterA', counterA)
-
     return (
         <div className={styles.layout}>
             <h2>Store</h2>

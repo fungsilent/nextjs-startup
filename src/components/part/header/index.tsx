@@ -1,15 +1,10 @@
 import _ from 'lodash'
+import useResponsive from '@/hooks/useResponsive'
 import DesktopHeader from '@/components/part/header/desktop'
 import MobileHeader from '@/components/part/header/mobile'
-import { setClassName } from '@/utils'
-import styles from '@/styles/part/header.module.scss'
+import { HeaderProps, MenuItem } from '@/types/app'
 
-export type MenuItem = {
-    name: string
-    link: string
-}
-
-const menuList = [
+const menuList: MenuItem[] = [
     {
         name: 'Page 1',
         link: '/', 
@@ -20,13 +15,32 @@ const menuList = [
     },
 ]
 
-const Header = ({ className }: { className?: string }) => {
-    
+const Header = ({
+    classes: {
+        desktop: desktopClassName,
+        mobile: mobileClassName,
+    } = {}
+}: HeaderProps) => {
+    const { isDesktop, isResponsive } = useResponsive()
     return (
-        <header className={setClassName([styles.header, className])}>
-            <DesktopHeader menuList={menuList}/>
-            <MobileHeader menuList={menuList}/>
-        </header>
+        <>
+            {isDesktop ? (
+                <DesktopHeader
+                    menuList={menuList}
+                    classes={{
+                        root: desktopClassName
+                    }}
+                />
+            ): null}
+            {isResponsive ? (
+                <MobileHeader
+                    menuList={menuList}
+                    classes={{
+                        root: mobileClassName
+                    }}
+                />
+            ): null}
+        </>
     )
 }
 

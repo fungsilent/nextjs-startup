@@ -13,10 +13,19 @@ export type AppProps<ExtraPageProps = unknown> = {
 }
 
 export type HeaderProps = {
-    className?: string
+    classes?: {
+        desktop?: ClassName
+        mobile?: ClassName
+    }
 }
 
 export type Page<ExtraPageProps = {}> = NextPage<PageProps & ExtraPageProps>
 export type PageProps = {
     readonly env: string
+}
+
+// Menu
+export type MenuItem = {
+    name: string
+    link: string
 }

@@ -20,7 +20,9 @@ export const getStaticProps: GetStaticProps<AppProps> = async () => {
     return {
         props: {
             header: {
-                className: 'home-header',
+                classes: {
+                    desktop: 'home-header'
+                }
             }
         }
     }

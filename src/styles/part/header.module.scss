@@ -1,84 +1,116 @@
-.header {
+.desktop {
     position: relative;
     display: flex;
     align-items: flex-start;
     justify-content: center;
     gap: $basicGap;
-    .desktopContainer {
+    background-color: $color-primary;
+    @include media('tablet') {
+        display: none;
+    }
+    .container {
         display: flex;
         justify-content: space-between;
         align-items: center;
-        background-color: $color-white;
-        border-radius: 30px;
-        margin: $basicGap * 2 $basicGap;
-        overflow: hidden;
-        @include media('tablet') {
-            display: none;
-        }
-        .logo {
-            flex: 0 0 54px;
-            position: relative;
-            width: 54px;
-            height: 54px;
-            margin-left: 2%;
-        }
+        padding: $smallGap $basicGap;
+        background-color: $color-primary;
+        // .logo {}
         .menu {
             flex: 1;
             display: flex;
             justify-content: space-around;
-            gap: $basicGap / 2;
-            max-width: 1000px;
-            color: $color-primary;
-            .menuItem {
-                padding: $basicGap 0;
+            gap: $smallGap;
+            .item {
+                color: $color-black;
+                padding: $smallGap;
+                transition: all .1s ease-in;
+                position: relative;
+                cursor: pointer;
+                &::after {
+                    content: '';
+                    position: absolute;
+                    top: 100%;
+                    left: 50%;
+                    height: 2px;
+                    width: 0;
+                    background-color: $color-secondary;
+                    transform: translateX(-50%);
+                    transition: all .2s ease-in;
+                }
                 &:hover {
                     color: $color-secondary;
+                    &::after {
+                        width: 100%;;
+                    }
                 }
             }
         }
     }
-    .mobileContainer {
-        position: fixed;
+}
+.mobile {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    padding: $smallGap $basicGap;
+    background-color: $color-primary;
+    // box-shadow: 0 0px 2px $color-secondary;
+    z-index: 1300;
+    position: sticky;
+    top: 0;
+    @include media('desktop', true) {
+        display: none;
+    }
+    // .logo {}
+    .menuButton {
         display: flex;
-        flex-wrap: wrap;
-        justify-content: space-between;
+        flex-direction: column;
+        justify-content: center;
         align-items: center;
-        background-color: $color-white;
-        box-shadow: 0px 0px 5px $color-gray;
-        z-index: 100;
-        @include media('desktop', true) {
-            display: none;
+        gap: 6px;
+        width: 30px;
+        height: 30px;
+        color: $color-white;
+        [data-line],
+        [data-line='2']::before {
+            content: '';
+            display: block;
+            background-color: $color-white;
+            width: 100%;
+            height: 3px;
+            border-radius: 3px;
+            transition: all .25s;
         }
-        .logo {
-            flex: 0 0 54px;
-            position: relative;
-            width: 54px;
-            height: 54px;
-            margin: 16px 20px;
-        }
-        .menuButton {
-            position: relative;
-            width: 30px;
-            height: 30px;
-            margin: 16px 20px;
+        &[data-show='true'] {
+            [data-line='1'],
+            [data-line='3'] {
+                width: 0;
+            }
+            [data-line='2'] {
+                transform: rotate(45deg);
+                &::before {
+                    transform: rotate(90deg);
+                }
+            }
         }
     }
 }
-$cornerSize: 14px;
 .sideMenu {
-    width: 75vw;
+    display: flex;
+    flex-direction: column;
+    gap: $smallGap;
+    width: 100vw;
     height: 100vh;
-    color: $color-white;
+    color: $color-secondary;
     background-color: $color-primary;
     padding: $basicGap 0;
     overflow-y: auto;
-    .menuItem {
-        padding: $basicGap;
+    .item {
+        padding: $smallGap $basicGap;
         transition: all .25s ease-in;
         &:hover {
             color: $color-primary;
             background-color: $color-secondary;
-            clip-path: polygon(0 0, calc(100% - $cornerSize) 0, 100% $cornerSize, 100% 100%, $cornerSize 100%, 0 calc(100% - $cornerSize))
         }
     }
 }

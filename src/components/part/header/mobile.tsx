@@ -1,58 +1,78 @@
 import _ from 'lodash'
+import { useRef, useEffect } from 'react'
 import { useToggle } from 'react-use'
-import Image from 'next/image'
-import Link  from 'next/link'
+import Image from '@/components/share/image'
+import Link  from '@/components/share/link'
 import Drawer from '@mui/material/Drawer'
 import { setClassName } from '@/utils'
-import { MenuItem } from '@/components/part/header'
+import { MenuItem } from '@/types/app'
 import styles from '@/styles/part/header.module.scss'
 
-const MobileHeader = (props: {
-    menuList: Array<MenuItem>
-}) => {
-    const {
-        menuList
-    } = props
+type MobileHeaderProps = {
+    menuList: MenuItem[]
+    classes: {
+        root?: ClassName
+    }
+}
+
+const MobileHeader = ({
+    menuList,
+    classes: {
+        root: rootClassName
+    } = {}
+}: MobileHeaderProps) => {
+    const bar = useRef<HTMLDivElement>(null)
+    const barHeight = useRef<number>(0)
     const [isShow, toggleShow] = useToggle(false)
+
+    useEffect(() => {
+        const height = bar.current?.clientHeight
+        if (_.isNumber(height)) {
+            barHeight.current = height
+        }
+    }, [])
 
     const closeMenu = () => toggleShow(false)
 
     const menuItem = _.map(menuList, (item, key) => (
-        <Link href={item.link} key={key}>
-            <a onClick={closeMenu}>
-                {item.name}
-            </a>
+        <Link
+            key={key}
+            href={item.link}
+            className={styles.item}
+            onClick={closeMenu}
+        >
+            {item.name}
         </Link>
     ))
 
     return (
-        <div className={setClassName(['container', styles.mobileContainer])}>
-            <Link href='/'>
-                <a className={styles.logo}>
-                    <Image
-                        src='/images/logo.png'
-                        alt='logo'
-                        layout='fill'
-                    />
-                </a>
-            </Link>
-            <i className={styles.menuButton} onClick={toggleShow}>
+        <header className={setClassName([styles.mobile, rootClassName])} ref={bar}>
+            <Link href='/' className={styles.logo}>
                 <Image
-                    src='/images/icon/meun_button.svg'
-                    alt='menu button'
-                    layout='fill'
+                    src='/images/logo.png'
+                    alt='logo'
+                    objectFit='contain'
+                    width={100}
+                    height={50}
+                    unoptimized
                 />
+            </Link>
+            <i className={styles.menuButton} onClick={toggleShow} data-show={isShow}>
+                <span data-line='1'/>
+                <span data-line='2'/>
+                <span data-line='3'/>
             </i>
             <Drawer
-                anchor='right'
+                anchor='left'
                 open={isShow}
                 onClose={closeMenu}
+                hideBackdrop={true}
             >
-                <div className={styles.sideMenu}>
+                <div className={styles.sideMenu} style={{ marginTop: barHeight.current }}>
                     {menuItem}
                 </div>
             </Drawer>
-        </div>
+        </header>
     )
 }
 

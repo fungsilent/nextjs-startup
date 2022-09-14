@@ -1,40 +1,47 @@
-import _ from 'lodash'
-import Image from 'next/image'
-import Link  from 'next/link'
+import { map } from 'lodash'
+import Image from '@/components/share/image'
+import Link  from '@/components/share/link'
 import { setClassName } from '@/utils'
-import { MenuItem } from '@/components/part/header'
+import { MenuItem } from '@/types/app'
 import styles from '@/styles/part/header.module.scss'
 
-const DesktopHeader = (props: {
-    menuList: Array<MenuItem>
-}) => {
-    const {
-        menuList
-    } = props
+type DesktopHeaderProps = {
+    menuList: MenuItem[]
+    classes: {
+        root?: ClassName
+    }
+}
 
-    const menuItem = _.map(menuList, (item, key) => (
-        <Link href={item.link} key={key}>
-            <a>
-                {item.name}
-            </a>
+const DesktopHeader = ({
+    menuList,
+    classes: {
+        root: rootClassName
+    } = {}
+}: DesktopHeaderProps) => {
+    const menuItem = map(menuList, (item, key) => (
+        <Link href={item.link} key={key} className={styles.item}>
+            {item.name}
         </Link>
     ))
 
     return (
-        <div className={setClassName(['container', styles.desktopContainer])}>
-            <Link href='/'>
-                <a className={styles.logo}>
+        <header className={setClassName([styles.desktop, rootClassName])}>
+            <div className={setClassName(['container', styles.container])}>
+                <Link href='/' className={styles.logo}>
                     <Image
                         src='/images/logo.png'
                         alt='logo'
-                        layout='fill'
+                        objectFit='contain'
+                        width={100}
+                        height={50}
+                        unoptimized
                     />
-                </a>
-            </Link>
-            <div className={styles.menu}>
-                {menuItem}
+                </Link>
+                <div className={styles.menu}>
+                    {menuItem}
+                </div>
             </div>
-        </div>
+        </header>
     )
 }
 

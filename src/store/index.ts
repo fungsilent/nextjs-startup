@@ -2,11 +2,13 @@ import { configureStore } from '@reduxjs/toolkit'
 import { Provider } from 'react-redux'
 import { createLogger } from 'redux-logger'
 // reducer
+import appReducer from './reducer/app'
 import apiReducer from './reducer/api'
 import normalReducer from './reducer/normal'
 
 const appStore = configureStore({
     reducer: {
+        app: appReducer,
         normal: normalReducer,
         api: apiReducer,
     },

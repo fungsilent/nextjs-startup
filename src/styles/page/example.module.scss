@@ -5,7 +5,7 @@
     gap: $smallGap;
     padding: $sectionGap;
     margin: auto;
-    background-color: $color-primary;
+    background-color: $color-secondary;
     h2 {
         border-bottom: 2px solid;
         @include media('desktop', true) {
@@ -21,8 +21,8 @@
     a {
         padding: $smallGap;
         &:hover {
-            color: $color-primary;
-            background-color: $color-secondary;
+            color: $color-white;
+            background-color: $color-primary;
         }
     }
 }
