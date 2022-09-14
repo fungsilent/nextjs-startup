@@ -1,4 +1,5 @@
 import { map } from 'lodash'
+import { useRouter } from 'next/router'
 import Image from '@/components/share/image'
 import Link  from '@/components/share/link'
 import { setClassName } from '@/utils'
@@ -6,20 +7,21 @@ import { MenuItem } from '@/types/app'
 import styles from '@/styles/part/header.module.scss'
 
 type DesktopHeaderProps = {
-    menuList: MenuItem[]
+    menu: MenuItem[]
     classes: {
         root?: ClassName
     }
 }
 
 const DesktopHeader = ({
-    menuList,
+    menu,
     classes: {
         root: rootClassName
     } = {}
 }: DesktopHeaderProps) => {
-    const menuItem = map(menuList, (item, key) => (
-        <Link href={item.link} key={key} className={styles.item}>
+    const { pathname } = useRouter()
+    const menuItems = map(menu, (item, key) => (
+        <Link href={item.link} key={key} className={setClassName([styles.item, [pathname === item.link, styles.active]])}>
             {item.name}
         </Link>
     ))
@@ -38,7 +40,7 @@ const DesktopHeader = ({
                     />
                 </Link>
                 <div className={styles.menu}>
-                    {menuItem}
+                    {menuItems}
                 </div>
             </div>
         </header>

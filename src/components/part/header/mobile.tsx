@@ -1,6 +1,7 @@
 import _ from 'lodash'
 import { useRef, useEffect } from 'react'
 import { useToggle } from 'react-use'
+import { useRouter } from 'next/router'
 import Image from '@/components/share/image'
 import Link  from '@/components/share/link'
 import Drawer from '@mui/material/Drawer'
@@ -9,18 +10,19 @@ import { MenuItem } from '@/types/app'
 import styles from '@/styles/part/header.module.scss'
 
 type MobileHeaderProps = {
-    menuList: MenuItem[]
+    menu: MenuItem[]
     classes: {
         root?: ClassName
     }
 }
 
 const MobileHeader = ({
-    menuList,
+    menu,
     classes: {
         root: rootClassName
     } = {}
 }: MobileHeaderProps) => {
+    const { pathname } = useRouter()
     const bar = useRef<HTMLDivElement>(null)
     const barHeight = useRef<number>(0)
     const [isShow, toggleShow] = useToggle(false)
@@ -34,11 +36,11 @@ const MobileHeader = ({
 
     const closeMenu = () => toggleShow(false)
 
-    const menuItem = _.map(menuList, (item, key) => (
+    const menuItems = _.map(menu, (item, key) => (
         <Link
             key={key}
             href={item.link}
-            className={styles.item}
+            className={setClassName([styles.item, [pathname === item.link, styles.active]])}
             onClick={closeMenu}
         >
             {item.name}
@@ -69,7 +71,7 @@ const MobileHeader = ({
                 hideBackdrop={true}
             >
                 <div className={styles.sideMenu} style={{ marginTop: barHeight.current }}>
-                    {menuItem}
+                    {menuItems}
                 </div>
             </Drawer>
         </header>

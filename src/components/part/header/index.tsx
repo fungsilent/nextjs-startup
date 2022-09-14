@@ -6,12 +6,12 @@ import { HeaderProps, MenuItem } from '@/types/app'
 
 const menuList: MenuItem[] = [
     {
-        name: 'Page 1',
+        name: 'Home',
         link: '/', 
     },
     {
-        name: 'Page 2',
-        link: '/', 
+        name: 'Example',
+        link: '/example', 
     },
 ]
 
@@ -26,7 +26,7 @@ const Header = ({
         <>
             {isDesktop ? (
                 <DesktopHeader
-                    menuList={menuList}
+                    menu={menuList}
                     classes={{
                         root: desktopClassName
                     }}
@@ -34,7 +34,7 @@ const Header = ({
             ): null}
             {isResponsive ? (
                 <MobileHeader
-                    menuList={menuList}
+                    menu={menuList}
                     classes={{
                         root: mobileClassName
                     }}
