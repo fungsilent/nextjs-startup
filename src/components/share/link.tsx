@@ -13,7 +13,7 @@ const Link = ({
         root: rootClassName,
     } = {},
     children,
-    href, as, replace, scroll, shallow, passHref, prefetch, locale, legacyBehavior, onMouseEnter, onClick,
+    href, as, replace, scroll, shallow, passHref, prefetch, locale, legacyBehavior,
     ...rest
 }: LinkProps) => {
     return (
@@ -28,8 +28,8 @@ const Link = ({
             prefetch={prefetch}
             locale={locale}
             legacyBehavior={legacyBehavior}
-            onMouseEnter={onMouseEnter}
-            onClick={onClick}
+            // onMouseEnter={onMouseEnter}
+            // onClick={onClick}
         >
             <a className={rootClassName ?? className} {...rest}>
                 {children}
